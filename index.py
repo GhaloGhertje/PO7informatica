@@ -9,4 +9,4 @@ Start.start
 Insert.insert
 Stop.stop
 Reset.reset
-Train.train
+Train.__init__()
