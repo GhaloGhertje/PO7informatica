@@ -1,15 +1,25 @@
 import pygame
-import start
 
 class Train():
-    def __init__(this):
+    def __init__(self, screen):
         print('trijntje oosterhuis')
-        this.screen = start.screen
-        this.length = 1000
+        self.screen = screen
+        self.height = 500 # Standaard beginhoogte van de trein
+        self.length = self.reference_length = 1000 # Standaard beginlengte van de trein
+        
+        self.x_mid_position, self.y_mid_position = self.screen.get_size()
+        self.x_mid_position /= 2
+        self.y_mid_position /= 2
 
-    def update(this):
+    def update(self, velocity):
         print('update train')
+        
+        self.gamma_factor = 1/(1-(velocity)**2) # Formule gamma waarde, velocity is in lichtsnelheden
+        self.reference_length = self.length/self.gamma_factor
+        self.rect = pygame.Rect(self.x_mid_position-(self.reference_length/2), self.y_mid_position-(self.height/2), self.reference_length, self.height)
 
-    def draw(this):
+    def draw(self):
         print('draw train')
-        #this.screen.blit()
+
+        pygame.draw.rect(self.screen, (255,255,255), self.rect)
+        #self.screen.blit()
