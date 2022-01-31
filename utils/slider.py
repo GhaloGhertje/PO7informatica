@@ -1,5 +1,6 @@
 import pygame
 
+################################################### Gedeeltelijk gekopieerd
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 50, 50)
@@ -69,3 +70,5 @@ class Slider():
             self.val = self.mini
         if self.val > self.maxi:
             self.val = self.maxi
+
+###################################################

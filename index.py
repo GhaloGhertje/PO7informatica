@@ -36,7 +36,7 @@ while True:
         if event.type == pygame.QUIT: # Als het programma wordt afgesloten door de gebruiker, sluit het ook echt af
             Stop.exit()
 
-    #####
+    ################################################### Gedeeltelijk gekopieerd
         elif event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             if slider.button_rect.collidepoint(pos):
@@ -46,7 +46,7 @@ while True:
 
     slider.move()
     slider.draw()
-    #####
+    ###################################################
 
     clock.tick(60) # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
     pygame.display.flip() # Update het scherm
