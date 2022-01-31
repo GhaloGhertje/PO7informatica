@@ -53,7 +53,7 @@ class Slider():
         surf = self.surface.copy()
 
         # dynamic
-        pos = (10+int((self.val-self.mini)/(self.maxi-self.mini)*80), 33)
+        pos = (10+int((self.value-self.mini)/(self.maxi-self.mini)*80), 33)
         self.button_rect = self.button_surf.get_rect(center=pos)
         surf.blit(self.button_surf, self.button_rect)
         self.button_rect.move_ip(self.x_pos, self.y_pos)  # move of button box to correct screen position
@@ -65,10 +65,12 @@ class Slider():
         """
         The dynamic part; reacts to movement of the slider button.
         """
-        self.val = (pygame.mouse.get_pos()[0] - self.x_pos - 10) / 80 * (self.maxi - self.mini) + self.mini
-        if self.val < self.mini:
-            self.val = self.mini
-        if self.val > self.maxi:
-            self.val = self.maxi
+        self.value = (pygame.mouse.get_pos()[0] - self.x_pos - 10) / 80 * (self.maxi - self.mini) + self.mini
+        if self.value < self.mini:
+            self.value = self.mini
+        if self.value > self.maxi:
+            self.value = self.maxi
+        
+        return self.value
 
 ###################################################

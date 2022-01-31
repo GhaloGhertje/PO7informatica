@@ -27,11 +27,6 @@ Reset.reset
 while True:
     screen.fill((0, 0, 0)) # Plakt een zwarte laag op het scherm die oude geschreven plaatjes ongedaan maakt
 
-    train.update(0.6) # PAS DE WAARDE AAN DAN MERK JE HET EFFECT # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
-    train.draw() # Schrijft de trein op het scherm
-
-
-
     for event in pygame.event.get():
         if event.type == pygame.QUIT: # Als het programma wordt afgesloten door de gebruiker, sluit het ook echt af
             Stop.exit()
@@ -44,9 +39,12 @@ while True:
         elif event.type == pygame.MOUSEBUTTONUP:
             slider.hit = False
 
-    slider.move()
+    value = slider.move()
     slider.draw()
     ###################################################
+
+    train.update(value) # PAS DE WAARDE AAN DAN MERK JE HET EFFECT # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
+    train.draw() # Schrijft de trein op het scherm
 
     clock.tick(60) # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
     pygame.display.flip() # Update het scherm
