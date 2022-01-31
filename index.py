@@ -17,7 +17,7 @@ clock = pygame.time.Clock() # Maakt een klok aan
 screen = Start.screen() # Start als het ware het scherm op
 font = Start.font()
 train = Train(screen) # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
-slider = Slider(screen, font, 'snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, mini, maxi, y_pos, width, height)
+slider = Slider(screen, font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, mini, maxi, y_pos, width, height)
 
 Insert.insert
 Reset.reset
@@ -30,7 +30,6 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: # Als het programma wordt afgesloten door de gebruiker, sluit het ook echt af
             Stop.exit()
-
     ################################################### Gedeeltelijk gekopieerd
         elif event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()

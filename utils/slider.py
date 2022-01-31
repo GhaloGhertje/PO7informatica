@@ -31,50 +31,47 @@ class Slider():
         self.hit = False  # the hit attribute indicates slider movement due to mouse interaction
 
         self.txt_surf = self.font.render(name, 1, BLACK)
-        self.txt_rect = self.txt_surf.get_rect(center=(50, 15))
+        self.txt_rect = self.txt_surf.get_rect(center=(self.width/2, (self.height/2)-25))
 
-        # Static graphics - slider background #
-        self.surface.fill((100, 100, 100))
-        pygame.draw.rect(self.surface, GREY, [0, 0, 100, 50], 3)
-        pygame.draw.rect(self.surface, ORANGE, [10, 10, 80, 10], 0)
-        pygame.draw.rect(self.surface, WHITE, [10, 30, 80, 5], 0)
+        # Statisch
+        self.surface.fill(WHITE)
+        #pygame.draw.rect(self.surface, GREY, [0, 0, self.width, self.height], 3)
+        #pygame.draw.rect(self.surface, ORANGE, [10, 10, 80, 10], 0)
+        #pygame.draw.rect(self.surface, WHITE, [10, 30, self.width-70, self.height-70], 0)
 
         self.surface.blit(self.txt_surf, self.txt_rect)  # this surface never changes
 
-        # dynamic graphics - button surface #
+        # Dynamisch
         self.button_surf = pygame.surface.Surface((20, 20))
         self.button_surf.fill(TRANS)
         self.button_surf.set_colorkey(TRANS)
         pygame.draw.circle(self.button_surf, BLACK, (10, 10), 6, 0)
-        pygame.draw.circle(self.button_surf, ORANGE, (10, 10), 4, 0)
+        pygame.draw.circle(self.button_surf, GREY, (10, 10), 4, 0)
 
-    def draw(self):
-        """
-        Combination of static and dynamic graphics in a copy of
-        the basic slide surface
-        """
-        # static
+    def draw(self): # Plakt de slider op het scherm
+        # Statisch
         surf = self.surface.copy()
 
-        # dynamic
-        pos = (10+int((self.value-self.mini)/(self.maxi-self.mini)*80), 33)
+        # Dynamisch
+        pos = (int((self.value-self.mini)/(self.maxi-self.mini)*self.width), self.height/2)
+        #pos = (10+int((self.value-self.mini)/(self.maxi-self.mini)*80), 33)
+        #pos = (10+self.x_position+(self.width*(self.value))/2, self.y_position+self.height/2)
+
         self.button_rect = self.button_surf.get_rect(center=pos)
         surf.blit(self.button_surf, self.button_rect)
         self.button_rect.move_ip(self.x_position, self.y_position)  # move of button box to correct screen position
 
-        # screen
-        self.screen.blit(surf, (self.x_position, self.y_position))
+        pygame.draw.rect(surf, BLUE, [0, 0, pos[0], self.height])
 
-    def move(self):
-        """
-        The dynamic part; reacts to movement of the slider button.
-        """
-        self.value = (pygame.mouse.get_pos()[0] - self.x_position - 10) / 80 * (self.maxi - self.mini) + self.mini
+        self.screen.blit(surf, (self.x_position, self.y_position))
+        self.screen.blit(self.font.render("Snelheid: " + str(self.value) + " c", False, WHITE), (100,50))
+
+    def move(self): # Verandert de waarde van de snelheid op basis van de muispositie
+        self.value = (pygame.mouse.get_pos()[0] - self.x_position) / self.width * (self.maxi - self.mini) + self.mini
         if self.value < self.mini:
             self.value = self.mini
         if self.value > self.maxi:
             self.value = self.maxi
         
         return self.value
-
 ###################################################
