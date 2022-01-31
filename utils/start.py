@@ -12,3 +12,11 @@ class Start():
         ctypes.windll.user32.SetProcessDPIAware() # Sommige computers werken niet zonder deze functie
         screen = pygame.display.set_mode((display_info.current_w, display_info.current_h), pygame.NOFRAME) # displayInfo.current_w staat voor de width van het scherm die al eerder opgevraagd is. pygame.NOFRAME staat voor windowed borderless
         return screen
+
+    def font():
+        print('font')
+
+        pygame.font.init()
+        font = pygame.font.SysFont('Arial Black', 30)
+
+        return font
