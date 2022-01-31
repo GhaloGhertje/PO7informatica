@@ -34,9 +34,9 @@ while True:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             if slider.button_rect.collidepoint(pos):
-                slider.hit = True
+                slider.click = True
         elif event.type == pygame.MOUSEBUTTONUP:
-            slider.hit = False
+            slider.click = False
 
     value = slider.move()
     slider.draw()

@@ -18,7 +18,7 @@ class Slider():
         self.screen = screen
         self.font = font
         
-        self.start_value = 0
+        self.value = 0 # Start hoeveelheid
         self.mini = mini
         self.maxi = maxi
         
@@ -28,7 +28,7 @@ class Slider():
         self.y_position = (y_pos - height)/2
 
         self.surface = pygame.surface.Surface((self.width, self.height))
-        self.hit = False  # the hit attribute indicates slider movement due to mouse interaction
+        self.click = False  # the hit attribute indicates slider movement due to mouse interaction
 
         self.txt_surf = self.font.render(name, 1, BLACK)
         self.txt_rect = self.txt_surf.get_rect(center=(self.width/2, (self.height/2)-25))
@@ -67,11 +67,12 @@ class Slider():
         self.screen.blit(self.font.render("Snelheid: " + str(self.value) + " c", False, WHITE), (100,50))
 
     def move(self): # Verandert de waarde van de snelheid op basis van de muispositie
-        self.value = (pygame.mouse.get_pos()[0] - self.x_position) / self.width * (self.maxi - self.mini) + self.mini
-        if self.value < self.mini:
-            self.value = self.mini
-        if self.value > self.maxi:
-            self.value = self.maxi
+        if self.click == True:
+            self.value = (pygame.mouse.get_pos()[0] - self.x_position) / self.width * (self.maxi - self.mini) + self.mini
+            if self.value < self.mini:
+                self.value = self.mini
+            if self.value > self.maxi:
+                self.value = self.maxi
         
         return self.value
 ###################################################
