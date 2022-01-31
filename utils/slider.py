@@ -65,6 +65,10 @@ class Slider():
 
         self.screen.blit(surf, (self.x_position, self.y_position))
         self.screen.blit(self.font.render("Snelheid: " + str(self.value) + " c", False, WHITE), (100,50))
+        self.value_ms = self.value * 2.99792458*10**8
+        self.value_kmh = self.value_ms * 3.6
+        self.screen.blit(self.font.render("Snelheid: " + str(self.value_ms) + " m/s", False, WHITE), (800,50))
+        self.screen.blit(self.font.render("Snelheid: " + str(self.value_kmh) + " km/h", False, WHITE), (1500,50))
 
     def move(self): # Verandert de waarde van de snelheid op basis van de muispositie
         if self.click == True:
