@@ -14,16 +14,20 @@ MAGENTA = (255, 0, 255)
 TRANS = (1, 1, 1)
 
 class Slider():
-    def __init__(self, name, mini, maxi, x_pos, y_pos, screen, font):
+    def __init__(self, screen, font, name, mini, maxi, y_pos, width, height):
+        self.screen = screen
+        self.font = font
+        
         self.start_value = 0
         self.mini = mini
         self.maxi = maxi
-        self.x_pos = x_pos
-        self.y_pos = y_pos
-        self.screen = screen
-        self.font = font
+        
+        self.width = width
+        self.height = height
+        self.x_position = (self.screen.get_size()[0] - width)/2
+        self.y_position = (y_pos - height)/2
 
-        self.surface = pygame.surface.Surface((100, 50))
+        self.surface = pygame.surface.Surface((self.width, self.height))
         self.hit = False  # the hit attribute indicates slider movement due to mouse interaction
 
         self.txt_surf = self.font.render(name, 1, BLACK)
@@ -56,16 +60,16 @@ class Slider():
         pos = (10+int((self.value-self.mini)/(self.maxi-self.mini)*80), 33)
         self.button_rect = self.button_surf.get_rect(center=pos)
         surf.blit(self.button_surf, self.button_rect)
-        self.button_rect.move_ip(self.x_pos, self.y_pos)  # move of button box to correct screen position
+        self.button_rect.move_ip(self.x_position, self.y_position)  # move of button box to correct screen position
 
         # screen
-        self.screen.blit(surf, (self.x_pos, self.y_pos))
+        self.screen.blit(surf, (self.x_position, self.y_position))
 
     def move(self):
         """
         The dynamic part; reacts to movement of the slider button.
         """
-        self.value = (pygame.mouse.get_pos()[0] - self.x_pos - 10) / 80 * (self.maxi - self.mini) + self.mini
+        self.value = (pygame.mouse.get_pos()[0] - self.x_position - 10) / 80 * (self.maxi - self.mini) + self.mini
         if self.value < self.mini:
             self.value = self.mini
         if self.value > self.maxi:

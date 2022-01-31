@@ -6,7 +6,7 @@ class Train():
         self.screen = screen
         self.height = 500 # Standaard beginhoogte van de trein
         self.length = self.reference_length = 1000 # Standaard beginlengte van de trein
-        self.old_velocity = 0
+        self.old_velocity = -1
         
         self.x_mid_position, self.y_mid_position = self.screen.get_size()
         self.x_mid_position /= 2

@@ -17,7 +17,7 @@ clock = pygame.time.Clock() # Maakt een klok aan
 screen = Start.screen() # Start als het ware het scherm op
 font = Start.font()
 train = Train(screen) # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
-slider = Slider('', 0, 0.99, 950, 950, screen, font) # Slider(name, mini, maxi, x_pos, y_pos, screen, font)
+slider = Slider(screen, font, 'snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, mini, maxi, y_pos, width, height)
 
 Insert.insert
 Reset.reset
@@ -43,7 +43,7 @@ while True:
     slider.draw()
     ###################################################
 
-    train.update(value) # PAS DE WAARDE AAN DAN MERK JE HET EFFECT # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
+    train.update(value) # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
     train.draw() # Schrijft de trein op het scherm
 
     clock.tick(60) # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt

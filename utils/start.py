@@ -17,6 +17,6 @@ class Start():
         print('font')
 
         pygame.font.init()
-        font = pygame.font.SysFont('Arial Black', 30)
+        font = pygame.font.SysFont('Arial Black', 15)
 
         return font
