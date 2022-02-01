@@ -36,8 +36,8 @@ while True:
         if event.type == pygame.QUIT: # Als het programma wordt afgesloten door de gebruiker, sluit het ook echt af
             Stop.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            pos = pygame.mouse.get_pos()
-            if slider.button_rect.collidepoint(pos):
+            mouse_position = pygame.mouse.get_pos()
+            if slider.surface_rect.collidepoint(mouse_position):
                 slider.click = True
         elif event.type == pygame.MOUSEBUTTONUP:
             slider.click = False
