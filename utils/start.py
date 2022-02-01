@@ -2,21 +2,19 @@ import pygame, ctypes
 
 class Start():
     def screen():
-        print('start')
-        ctypes.windll.user32.SetProcessDPIAware() # Sommige computers werken niet zonder deze functie
 
-        pygame.init() # Start pygame op
+        ctypes.windll.user32.SetProcessDPIAware() # Sommige beeldschermen werken niet goed met het programma zonder deze code
+
+        pygame.init() # Start de pygame library op
         pygame.display.set_caption('Speciale relativiteitstheorie') # Geeft een naam aan de applicatie
 
-        # Display functies
-        display_info = pygame.display.Info()
+        # Monitor
+        display_info = pygame.display.Info() # Vraagt de monitor specificaties op
         screen = pygame.display.set_mode((display_info.current_w, display_info.current_h), pygame.NOFRAME) # displayInfo.current_w staat voor de width van het scherm die al eerder opgevraagd is. pygame.NOFRAME staat voor windowed borderless
-        return screen
+        return screen # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is
 
     def font():
-        print('font')
-
+        # Start de font library op en maakt een object aan van een systeem font
         pygame.font.init()
         font = pygame.font.SysFont('Arial Black', 18)
-
-        return font
+        return font # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is

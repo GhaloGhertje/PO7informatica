@@ -18,13 +18,15 @@ screen = Start.screen() # Start als het ware het scherm op
 font = Start.font()
 
 # Maakt objecten uit de classes Train en Slider
-train = Train(screen) # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
+train = Train(screen, 'trein.png') # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
 slider = Slider(screen, font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, mini, maxi, y_pos, width, height)
 
 # Roept de variabelen op uit de classes Insert en Reset
 Insert.insert
 Reset.reset
 
+# Maakt de evenement lijst leeg, zodat ingedrukte knoppen die voor de loop worden ingedrukt, geen ongewenste effecten hebben
+pygame.event.clear()
 
 # MAIN LOOP
 while True:
