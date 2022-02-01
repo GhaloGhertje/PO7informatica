@@ -1,6 +1,5 @@
 import pygame
 
-################################################### Gedeeltelijk gekopieerd
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 50, 50)
@@ -28,7 +27,7 @@ class Slider():
         self.y_position = (y_pos - height)/2
 
         self.surface = pygame.surface.Surface((self.width, self.height))
-        self.click = False  # the hit attribute indicates slider movement due to mouse interaction
+        self.click = False  # Als deze aanstaat wordt er met de linker muisknop geklikt op de slider
 
         self.txt_surf = self.font.render(name, 1, BLACK)
         self.txt_rect = self.txt_surf.get_rect(center=(self.width/2, (self.height/2)-25))
@@ -79,4 +78,3 @@ class Slider():
                 self.value = self.maxi
         
         return self.value
-###################################################

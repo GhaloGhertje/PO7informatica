@@ -16,9 +16,12 @@ clock = pygame.time.Clock() # Maakt een klok aan
 
 screen = Start.screen() # Start als het ware het scherm op
 font = Start.font()
+
+# Maakt objecten uit de classes Train en Slider
 train = Train(screen) # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
 slider = Slider(screen, font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, mini, maxi, y_pos, width, height)
 
+# Roept de variabelen op uit de classes Insert en Reset
 Insert.insert
 Reset.reset
 
@@ -30,7 +33,6 @@ while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT: # Als het programma wordt afgesloten door de gebruiker, sluit het ook echt af
             Stop.exit()
-    ################################################### Gedeeltelijk gekopieerd
         elif event.type == pygame.MOUSEBUTTONDOWN:
             pos = pygame.mouse.get_pos()
             if slider.button_rect.collidepoint(pos):
@@ -40,7 +42,6 @@ while True:
 
     value = slider.move()
     slider.draw()
-    ###################################################
 
     train.update(value) # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
     train.draw() # Schrijft de trein op het scherm
