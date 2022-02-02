@@ -32,7 +32,7 @@ class Train():
         if velocity != self.old_velocity: # Beperkt het aantal keer dat de trein geupdate moet worden als er niets veranderd is
             self.old_velocity = velocity
 
-            print('update train')
+            #print('update train')
 
             self.gamma_factor = 1/(1-(velocity)**2) # Formule gamma waarde, velocity is in lichtsnelheden
             self.reference_length = self.length/self.gamma_factor
@@ -48,7 +48,7 @@ class Train():
             self.image = pygame.transform.scale(self.original_image, self.rectangle.size)
 
     def draw(self):
-        print('draw train')
+        #print('draw train')
 
         # CODE VOOR WIT VLAK
         #pygame.draw.rect(self.screen, (255,255,255), self.rect) # Wit rechthoek als trein

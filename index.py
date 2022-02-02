@@ -17,9 +17,11 @@ clock = pygame.time.Clock() # Maakt een klok aan
 screen = Start.screen() # Start als het ware het scherm op
 font = Start.font()
 
+pressed0, pressed1 = False, False
+
 # Maakt objecten uit de classes Train en Slider
 train = Train(screen, 'trein.png') # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
-slider = Slider(screen, font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, mini, maxi, y_pos, width, height)
+slider = Slider(screen, font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, min, max, y_pos, width, height)
 
 # Roept de variabelen op uit de classes Insert en Reset
 Insert.insert
@@ -41,6 +43,21 @@ while True:
                 slider.click = True
         elif event.type == pygame.MOUSEBUTTONUP:
             slider.click = False
+        
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                pressed0 = True
+                value = slider.move_keyboard(-1)
+            elif event.key == pygame.K_RIGHT:
+                pressed1 = True
+                value = slider.move_keyboard(1)
+
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT and pressed0:
+                pressed0 = False
+            elif event.key == pygame.K_RIGHT and pressed1:
+                pressed1 = False
+
 
     value = slider.move()
     slider.draw()

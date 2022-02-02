@@ -14,13 +14,13 @@ TRANS = (1, 1, 1)
 
 
 class Slider():
-    def __init__(self, screen, font, name, mini, maxi, y_pos, width, height):
+    def __init__(self, screen, font, name, min, max, y_pos, width, height):
         self.screen = screen
         self.font = font
 
         self.value = 0  # Start hoeveelheid
-        self.mini = mini
-        self.maxi = maxi
+        self.min = min
+        self.max = max
 
         self.width = width
         self.height = height
@@ -47,7 +47,7 @@ class Slider():
 
         # Dynamisch
         self.position_slider_x = int(
-            (self.value-self.mini)/(self.maxi-self.mini)*self.width)
+            (self.value-self.min)/(self.max-self.min)*self.width)
 
         pygame.draw.rect(self.copy_surface, BLUE, [
                          0, 0, self.position_slider_x, self.height])  # Tekent het blauwe gedeelte
@@ -58,17 +58,40 @@ class Slider():
         self.value_ms = self.value * 2.99792458*10**8
         self.value_kmh = self.value_ms * 3.6
         self.screen.blit(self.font.render(
-            "Snelheid: " + str(round(self.value_ms, 0)) + " m/s", False, WHITE), (800, 50))
+            "Snelheid: " + str(int(round(self.value_ms, 0))) + " m/s", False, WHITE), (800, 50))
         self.screen.blit(self.font.render(
-            "Snelheid: " + str(round(self.value_kmh, 0)) + " km/h", False, WHITE), (1500, 50))
+            "Snelheid: " + str(int(round(self.value_kmh, 0))) + " km/h", False, WHITE), (1500, 50))
 
     def move(self):  # Verandert de waarde van de snelheid op basis van de muispositie
         if self.click == True:
             self.value = (pygame.mouse.get_pos()[
-                          0] - self.x_position) / self.width * (self.maxi - self.mini) + self.mini
-            if self.value < self.mini:
-                self.value = self.mini
-            if self.value > self.maxi:
-                self.value = self.maxi
+                          0] - self.x_position) / self.width * (self.max - self.min) + self.min
+            if self.value < self.min:
+                self.value = self.min
+            if self.value > self.max:
+                self.value = self.max
 
+        return self.value
+
+    def move_keyboard(self, direction):
+        if direction == -1:  # Pijltje naar links ingedrukt
+            print('left')
+            if self.value >= 0 and self.value <= 0.1:
+                self.value = self.min
+            else:
+                self.value = round(self.value-0.1, 1)
+           
+        else:  # Pijltje naar rechts ingedrukt
+            print('right')
+            if self.value >= 0.8:
+                self.value = self.max
+            else:
+                self.value = round(self.value+0.1, 1)
+                if self.value > self.max:
+                    self.value = self.max
+
+        #if self.value < self.min:
+        #    self.value = self.min
+        #if self.value > self.max:
+        #    self.value = self.max
         return self.value
