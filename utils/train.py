@@ -22,6 +22,10 @@ class Train():
         self.original_image = pygame.image.load(os.path.join("utils", "images", image_name)) # os.path.join() zorgt ervoor dat het programma ook op ander besturingssystemen afgespeeld kan worden, omdat paths anders werken op verschillende besturingssystemen
         self.original_image_rectangle = self.original_image.get_rect()
         self.length, self.height = self.original_image_rectangle.size
+
+        self.length /= 4
+        self.height /= 4
+
         self.image = pygame.transform.scale(self.original_image, self.original_image_rectangle.size)
 
     def update(self, velocity):
