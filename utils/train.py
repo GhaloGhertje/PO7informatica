@@ -25,7 +25,7 @@ class Train():
         self.image = pygame.transform.scale(self.original_image, self.original_image_rectangle.size)
 
     def update(self, velocity):
-        if velocity != self.old_velocity: #Beperkt het aantal keer dat de trein geupdate moet worden als er niets veranderd is
+        if velocity != self.old_velocity: # Beperkt het aantal keer dat de trein geupdate moet worden als er niets veranderd is
             self.old_velocity = velocity
 
             print('update train')
@@ -41,7 +41,7 @@ class Train():
             #self.size = (self.reference_length, self.height)
             #self.reference_image = pygame.transform.smoothscale(self.image, (self.reference_length, self.height))
 
-            self.image = pygame.transform.smoothscale(self.original_image, self.rectangle.size)
+            self.image = pygame.transform.scale(self.original_image, self.rectangle.size)
 
     def draw(self):
         print('draw train')
