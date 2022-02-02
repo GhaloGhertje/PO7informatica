@@ -1,9 +1,10 @@
-import pygame#, ctypes
+import pygame, ctypes, platform
 
 class Start():
     def screen():
-
-        #ctypes.windll.user32.SetProcessDPIAware() # Sommige beeldschermen werken niet goed met het programma zonder deze code
+        
+        if platform.system() == 'Windows':
+            ctypes.windll.user32.SetProcessDPIAware() # Sommige beeldschermen werken niet goed met het programma zonder deze code
 
         pygame.init() # Start de pygame library op
         pygame.display.set_caption('Speciale relativiteitstheorie') # Geeft een naam aan de applicatie
