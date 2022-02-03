@@ -23,7 +23,7 @@ min_simulation = 0
 max_simulation = 1
 
 # Maakt objecten uit de classes Train en Slider
-train = Train(screen, 'trein.png') # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
+train = Train(screen, 'trein.png', font) # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
 slider = Slider(screen, font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, min, max, y_pos, width, height)
 
 # Roept de variabelen op uit de classes Insert en Reset

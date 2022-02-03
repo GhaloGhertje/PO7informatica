@@ -79,14 +79,14 @@ class Slider():
             if self.value >= 0 and self.value <= 0.1:
                 self.value = self.min
             else:
-                self.value = round(self.value-0.1, 1)
+                self.value = round(self.value-0.051, 1)
            
         else:  # Pijltje naar rechts ingedrukt
             print('right')
             if self.value >= 0.9:
                 self.value = self.max
             else:
-                self.value = round(self.value+0.1, 1)
+                self.value = round(self.value+0.0501, 1)
                 if self.value > self.max:
                     self.value = self.max
 
