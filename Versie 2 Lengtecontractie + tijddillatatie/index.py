@@ -17,7 +17,10 @@ clock = pygame.time.Clock() # Maakt een klok aan
 screen = Start.screen() # Start als het ware het scherm op
 font = Start.font()
 
-pressed0, pressed1 = False, False
+pressed0, pressed1, pressed2, pressed3 = False, False, False, False
+current_simulation = 0 # Welke simulatie er nu afgespeeld wordt. 0 = Lengtecontractie, 1 = tijddillatatie
+min_simulation = 0
+max_simulation = 1
 
 # Maakt objecten uit de classes Train en Slider
 train = Train(screen, 'trein.png') # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
@@ -51,19 +54,30 @@ while True:
             elif event.key == pygame.K_RIGHT:
                 pressed1 = True
                 value = slider.move_keyboard(1)
+            elif event.key == pygame.K_DOWN and current_simulation > min_simulation:
+                pressed0 = True
+                current_simulation -= 1
+            elif event.key == pygame.K_UP and current_simulation < max_simulation:
+                pressed1 = True
+                current_simulation += 1
 
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT and pressed0:
                 pressed0 = False
             elif event.key == pygame.K_RIGHT and pressed1:
                 pressed1 = False
+            elif event.key == pygame.K_DOWN and pressed2:
+                pressed2 = False
+            elif event.key == pygame.K_UP and pressed3:
+                pressed3 = False
 
 
     value = slider.move()
     slider.draw()
 
-    train.update(value) # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
-    train.draw() # Schrijft de trein op het scherm
+    if current_simulation == 0:
+        train.update(value) # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
+        train.draw() # Schrijft de trein op het scherm
 
     clock.tick(60) # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
     pygame.display.flip() # Update het scherm
