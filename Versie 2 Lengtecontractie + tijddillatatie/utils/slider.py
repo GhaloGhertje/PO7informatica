@@ -8,7 +8,6 @@ GREEN = (0, 255, 50)
 BLUE = (50, 50, 255)
 GREY = (200, 200, 200)
 
-
 class Slider():
     def __init__(self, screen, font, name, min, max, y_pos, width, height):
         self.screen = screen
@@ -86,8 +85,8 @@ class Slider():
                 if self.value > self.max:
                     self.value = self.max
 
-        #if self.value < self.min:
-        #    self.value = self.min
-        #if self.value > self.max:
-        #    self.value = self.max
         return self.value
+
+    def gamma(self):
+        gamma_factor = 1/(1-(self.value)**0.5) # Formule gamma waarde, value is de snelheid in lichtsnelheden
+        return gamma_factor

@@ -20,13 +20,12 @@ class Train():
         self.image = pygame.transform.scale(self.original_image, self.original_image_rectangle.size)
         self.font = font
 
-    def update(self, velocity):
+    def update(self, velocity, gamma_factor):
         if velocity != self.old_velocity: # Beperkt het aantal keer dat de trein geupdate moet worden als er niets veranderd is
             self.old_velocity = velocity
 
-            self.gamma_factor = 1/(1-(velocity)**2) # Formule gamma waarde, velocity is in lichtsnelheden
-            self.reference_length = self.length/self.gamma_factor
-            self.percentage = (1/self.gamma_factor)*100
+            self.reference_length = self.length/gamma_factor
+            self.percentage = (1/gamma_factor)*100
             self.rectangle = pygame.Rect(self.x_mid_position-(self.reference_length/2), self.y_mid_position-(self.height/2), self.reference_length, self.height)
 
             self.image = pygame.transform.scale(self.original_image, self.rectangle.size)

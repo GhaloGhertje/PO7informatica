@@ -26,8 +26,8 @@ max_simulation = 1
 # Maakt objecten uit de classes Train en Slider
 train = Train(screen, 'trein.png', general_font) # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
 slider = Slider(screen, general_font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, min, max, y_pos, width, height)
-clock = Clock(screen, clock_font)
-reference_clock = Clock (screen, clock_font)
+clock = Clock(screen, clock_font, 100, 980)
+reference_clock = Clock (screen, clock_font, 1820, 980)
 
 # Roept de variabelen op uit de classes Insert en Reset
 Insert.insert
@@ -76,14 +76,17 @@ while True:
 
 
     value = slider.move()
+    gamma_factor = slider.gamma()
     slider.draw()
 
     if current_simulation == 0:
-        train.update(value) # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
+        train.update(value, gamma_factor) # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
         train.draw() # Schrijft de trein op het scherm
     else:
-        clock.update()
+        time = clock.update()
+        reference_clock.reference_update(time, gamma_factor)
         clock.draw()
+        reference_clock.draw()
 
     general_clock.tick(60) # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
     pygame.display.flip() # Update het scherm
