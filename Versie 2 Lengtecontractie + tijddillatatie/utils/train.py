@@ -1,5 +1,8 @@
+# IMPORT LIBRARIES
 import pygame, os
 
+
+# CLASS
 class Train():
     def __init__(self, screen, image_name, font):
         self.screen = screen
@@ -20,6 +23,7 @@ class Train():
         self.image = pygame.transform.scale(self.original_image, self.original_image_rectangle.size)
         self.font = font
 
+
     def update(self, velocity, gamma_factor):
         if velocity != self.old_velocity: # Beperkt het aantal keer dat de trein geupdate moet worden als er niets veranderd is
             self.old_velocity = velocity
@@ -29,6 +33,7 @@ class Train():
             self.rectangle = pygame.Rect(self.x_mid_position-(self.reference_length/2), self.y_mid_position-(self.height/2), self.reference_length, self.height)
 
             self.image = pygame.transform.scale(self.original_image, self.rectangle.size)
+
 
     def draw(self):
         self.screen.blit(self.image, (self.rectangle.x, self.rectangle.y)) # Plaatje als trein

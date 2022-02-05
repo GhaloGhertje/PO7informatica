@@ -1,8 +1,13 @@
+# IMPORT LIBRARIES
 import pygame
 from timeit import default_timer as timer
 
+
+# VARIABLES
 RED = (255, 50, 50)
 
+
+# CLASS
 class Clock():
     def __init__(self, screen, font, x, y):
         self.screen = screen
@@ -15,19 +20,28 @@ class Clock():
 
         self.start = False
 
+
     def update(self):
         if not self.start:
             self.start = True
-            self.start = timer()
-            self.time = 0
+            self.start = self.end = timer()
+            self.time = self.delta_time = 0
         else:
+            self.previous = self.end
             self.end = timer()
             self.time = self.end - self.start
+            self.delta_time = self.end - self.previous
 
-        return self.time
+        return self.delta_time
 
-    def reference_update(self, time, gamma_factor):
-        self.time = time * gamma_factor
+
+    def reference_update(self, delta_time, gamma_factor):
+        if not self.start:
+            self.start = True
+            self.time = 0
+        else:
+            self.time += delta_time / gamma_factor
+
 
     def draw(self):
         self.text = self.font.render("T: " + str(round(self.time, 1)), False, RED)

@@ -83,8 +83,8 @@ while True:
         train.update(value, gamma_factor) # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
         train.draw() # Schrijft de trein op het scherm
     else:
-        time = clock.update()
-        reference_clock.reference_update(time, gamma_factor)
+        delta_time = clock.update()
+        reference_clock.reference_update(delta_time, gamma_factor)
         clock.draw()
         reference_clock.draw()
 

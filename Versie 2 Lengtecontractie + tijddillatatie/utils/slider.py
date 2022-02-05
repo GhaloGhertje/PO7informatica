@@ -1,5 +1,8 @@
+# IMPORT LIBRARIES
 import pygame
 
+
+# VARIABLES
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 50, 50)
@@ -8,6 +11,8 @@ GREEN = (0, 255, 50)
 BLUE = (50, 50, 255)
 GREY = (200, 200, 200)
 
+
+# CLASS
 class Slider():
     def __init__(self, screen, font, name, min, max, y_pos, width, height):
         self.screen = screen
@@ -36,6 +41,7 @@ class Slider():
         self.surface_rect = self.surface.get_rect()
         self.surface_rect.move_ip(self.x_position, self.y_position)
 
+
     def draw(self):  # Plakt de slider op het scherm
         # Statisch
         self.copy_surface = self.surface.copy()
@@ -57,6 +63,7 @@ class Slider():
         self.screen.blit(self.font.render(
             "Snelheid: " + str(int(round(self.value_kmh, 0))) + " km/h", False, WHITE), (1500, 50))
 
+
     def move(self):  # Verandert de waarde van de snelheid op basis van de muispositie
         if self.click == True:
             self.value = (pygame.mouse.get_pos()[
@@ -67,6 +74,7 @@ class Slider():
                 self.value = self.max
 
         return self.value
+
 
     def move_keyboard(self, direction):
         if direction == -1:  # Pijltje naar links ingedrukt
@@ -87,6 +95,7 @@ class Slider():
 
         return self.value
 
+
     def gamma(self):
-        gamma_factor = 1/(1-(self.value)**0.5) # Formule gamma waarde, value is de snelheid in lichtsnelheden
+        gamma_factor = 1/((1-(self.value)**2)**0.5) # Formule gamma waarde, value is de snelheid in lichtsnelheden
         return gamma_factor
