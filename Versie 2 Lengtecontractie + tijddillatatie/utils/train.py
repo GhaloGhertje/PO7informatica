@@ -10,7 +10,7 @@ class Train():
 
         self.old_velocity = -1 # old_velocity moet gedefinieerd moet worden, maar de waarde mag niet gelijk zijn of groter dan zijn dan 0 aan het begin.
 
-        self.original_image = pygame.image.load(os.path.join("utils", "images", image_name)) # os.path.join() zorgt ervoor dat het programma ook op ander besturingssystemen afgespeeld kan worden, omdat paths anders werken op verschillende besturingssystemen
+        self.original_image = pygame.image.load(os.path.join('utils', 'images', image_name)) # os.path.join() zorgt ervoor dat het programma ook op ander besturingssystemen afgespeeld kan worden, omdat paths anders werken op verschillende besturingssystemen
         self.original_image_rectangle = self.original_image.get_rect()
         self.length, self.height = self.original_image_rectangle.size
 

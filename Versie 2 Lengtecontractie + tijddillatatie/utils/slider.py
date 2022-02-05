@@ -7,10 +7,6 @@ YELLOW = (255, 255, 0)
 GREEN = (0, 255, 50)
 BLUE = (50, 50, 255)
 GREY = (200, 200, 200)
-ORANGE = (200, 100, 50)
-CYAN = (0, 255, 255)
-MAGENTA = (255, 0, 255)
-TRANS = (1, 1, 1)
 
 
 class Slider():

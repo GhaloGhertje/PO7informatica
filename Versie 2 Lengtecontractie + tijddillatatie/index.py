@@ -9,13 +9,14 @@ from utils.stop import Stop
 from utils.reset import Reset
 from utils.train import Train
 from utils.slider import Slider
+from utils.clock import Clock
 
 
 # MAKEN VAN STANDAARD VARIABELEN EN OBJECTEN
-clock = pygame.time.Clock() # Maakt een klok aan
+general_clock = pygame.time.Clock() # Maakt een klok aan
 
 screen = Start.screen() # Start als het ware het scherm op
-font = Start.font()
+general_font, clock_font = Start.fonts('lcd_font.tff')
 
 pressed0, pressed1, pressed2, pressed3 = False, False, False, False
 current_simulation = 0 # Welke simulatie er nu afgespeeld wordt. 0 = Lengtecontractie, 1 = tijddillatatie
@@ -23,8 +24,10 @@ min_simulation = 0
 max_simulation = 1
 
 # Maakt objecten uit de classes Train en Slider
-train = Train(screen, 'trein.png', font) # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
-slider = Slider(screen, font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, min, max, y_pos, width, height)
+train = Train(screen, 'trein.png', general_font) # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
+slider = Slider(screen, general_font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, min, max, y_pos, width, height)
+clock = Clock(screen, clock_font)
+reference_clock = Clock (screen, clock_font)
 
 # Roept de variabelen op uit de classes Insert en Reset
 Insert.insert
@@ -78,6 +81,9 @@ while True:
     if current_simulation == 0:
         train.update(value) # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
         train.draw() # Schrijft de trein op het scherm
+    else:
+        clock.update()
+        clock.draw()
 
-    clock.tick(60) # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
+    general_clock.tick(60) # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
     pygame.display.flip() # Update het scherm
