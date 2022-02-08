@@ -58,7 +58,7 @@ class Slider():
         self.value_ms = self.value * 2.99792458*10**8
         self.value_kmh = self.value_ms * 3.6
         self.screen.blit(self.font.render(
-            "Snelheid: " + str("{:e}".format(int(self.value_ms))) + " m/s", False, WHITE), (800, 50))
+            "Snelheid: " + str("{:e}".format(int(self.value_ms))) + " m/s", False, WHITE), (800, 50))  # "{:e}.format()" zet de nummers in de wetenschappelijke notatie (bijvoorbeeld: 1,234e+8)
         self.screen.blit(self.font.render(
             "Snelheid: " + str("{:e}".format(int(self.value_kmh))) + " km/h", False, WHITE), (1500, 50))
 

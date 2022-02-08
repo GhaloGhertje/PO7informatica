@@ -1,3 +1,4 @@
+'''Deze file rendert de slider en de tekst die daarboven staat'''
 # IMPORTEREN VAN DE LIBRARIES
 import pygame
 
@@ -13,35 +14,39 @@ from utils.clock import Clock
 
 
 # MAKEN VAN STANDAARD VARIABELEN EN OBJECTEN
-general_clock = pygame.time.Clock() # Maakt een klok aan
+general_clock = pygame.time.Clock()  # Maakt een klok aan
 
-screen = Start.screen() # Start als het ware het scherm op
+screen = Start.screen()  # Start als het ware het scherm op
 general_font, clock_font = Start.fonts('lcd_font.tff')
 
-pressed0, pressed1, pressed2, pressed3 = False, False, False, False
-current_simulation = 0 # Welke simulatie er nu afgespeeld wordt. 0 = Lengtecontractie, 1 = tijddillatatie
-min_simulation = 0
-max_simulation = 1
+PRESSED0, PRESSED1, PRESSED2, PRESSED3 = False, False, False, False
+# Welke simulatie er nu afgespeeld wordt. 0 = Lengtecontractie, 1 = tijddillatatie
+CURRENT_SIMULATION = 0
+MIN_SIMULATION = 0
+MAX_SIMULATION = 1
 
 # Maakt objecten uit de classes Train en Slider
-train = Train(screen, 'trein.png', general_font) # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
-slider = Slider(screen, general_font, 'Snelheid', 0, 0.999, 300, 1620, 100) # Slider(self, screen, font, name, min, max, y_pos, width, height)
+# Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
+train = Train(screen, 'trein.png', general_font)
+# Slider(self, screen, font, name, min, max, y_pos, width, height)
+slider = Slider(screen, general_font, 'Snelheid', 0, 0.999, 300, 1620, 100)
 clock = Clock(screen, clock_font, 100, 980)
-reference_clock = Clock (screen, clock_font, 1820, 980)
+reference_clock = Clock(screen, clock_font, 1820, 980)
 
 # Roept de variabelen op uit de classes Insert en Reset
 Insert.insert
 Reset.reset
 
-# Maakt de evenement lijst leeg, zodat ingedrukte knoppen die voor de loop worden ingedrukt, geen ongewenste effecten hebben
+# Maakt de evenement lijst leeg, zodat ingedrukte knoppen geen ongewenste effecten hebben
 pygame.event.clear()
 
 # MAIN LOOP
 while True:
-    screen.fill((0, 0, 0)) # Plakt een zwarte laag op het scherm die oude geschreven plaatjes ongedaan maakt
+    # Plakt een zwarte laag op het scherm die oude geschreven plaatjes ongedaan maakt
+    screen.fill((0, 0, 0))
 
     for event in pygame.event.get():
-        if event.type == pygame.QUIT: # Als het programma wordt afgesloten door de gebruiker, sluit het ook echt af
+        if event.type == pygame.QUIT:  # Zorgt voor het afsluiten
             Stop.exit()
         elif event.type == pygame.MOUSEBUTTONDOWN:
             mouse_position = pygame.mouse.get_pos()
@@ -49,44 +54,45 @@ while True:
                 slider.click = True
         elif event.type == pygame.MOUSEBUTTONUP:
             slider.click = False
-        
+
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                pressed0 = True
+                PRESSED0 = True
                 value = slider.move_keyboard(-1)
             elif event.key == pygame.K_RIGHT:
-                pressed1 = True
+                PRESSED1 = True
                 value = slider.move_keyboard(1)
-            elif event.key == pygame.K_DOWN and current_simulation > min_simulation:
-                pressed0 = True
-                current_simulation -= 1
-            elif event.key == pygame.K_UP and current_simulation < max_simulation:
-                pressed1 = True
-                current_simulation += 1
+            elif event.key == pygame.K_DOWN and CURRENT_SIMULATION > MIN_SIMULATION:
+                PRESSED0 = True
+                CURRENT_SIMULATION -= 1
+            elif event.key == pygame.K_UP and CURRENT_SIMULATION < MAX_SIMULATION:
+                PRESSED1 = True
+                CURRENT_SIMULATION += 1
 
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_LEFT and pressed0:
-                pressed0 = False
-            elif event.key == pygame.K_RIGHT and pressed1:
-                pressed1 = False
-            elif event.key == pygame.K_DOWN and pressed2:
-                pressed2 = False
-            elif event.key == pygame.K_UP and pressed3:
-                pressed3 = False
-
+            if event.key == pygame.K_LEFT and PRESSED0:
+                PRESSED0 = False
+            elif event.key == pygame.K_RIGHT and PRESSED1:
+                PRESSED1 = False
+            elif event.key == pygame.K_DOWN and PRESSED2:
+                PRESSED2 = False
+            elif event.key == pygame.K_UP and PRESSED3:
+                PRESSED3 = False
 
     value = slider.move()
     gamma_factor = slider.gamma()
     slider.draw()
 
-    if current_simulation == 0:
-        train.update(value, gamma_factor) # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
-        train.draw() # Schrijft de trein op het scherm
+    if CURRENT_SIMULATION == 0:
+        # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
+        train.update(value, gamma_factor)
+        train.draw()  # Schrijft de trein op het scherm
     else:
         delta_time = clock.update()
         reference_clock.reference_update(delta_time, gamma_factor)
         clock.draw()
         reference_clock.draw()
 
-    general_clock.tick(60) # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
-    pygame.display.flip() # Update het scherm
+    # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
+    general_clock.tick(60)
+    pygame.display.flip()  # Update het scherm
