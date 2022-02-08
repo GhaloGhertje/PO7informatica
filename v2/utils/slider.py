@@ -41,7 +41,6 @@ class Slider():
         self.surface_rect = self.surface.get_rect()
         self.surface_rect.move_ip(self.x_position, self.y_position)
 
-
     def draw(self):  # Plakt de slider op het scherm
         # Statisch
         self.copy_surface = self.surface.copy()
@@ -59,10 +58,9 @@ class Slider():
         self.value_ms = self.value * 2.99792458*10**8
         self.value_kmh = self.value_ms * 3.6
         self.screen.blit(self.font.render(
-            "Snelheid: " + str(int(round(self.value_ms, 0))) + " m/s", False, WHITE), (800, 50))
+            "Snelheid: " + str("{:e}".format(int(self.value_ms))) + " m/s", False, WHITE), (800, 50))
         self.screen.blit(self.font.render(
-            "Snelheid: " + str(int(round(self.value_kmh, 0))) + " km/h", False, WHITE), (1500, 50))
-
+            "Snelheid: " + str("{:e}".format(int(self.value_kmh))) + " km/h", False, WHITE), (1500, 50))
 
     def move(self):  # Verandert de waarde van de snelheid op basis van de muispositie
         if self.click == True:
@@ -75,7 +73,6 @@ class Slider():
 
         return self.value
 
-
     def move_keyboard(self, direction):
         if direction == -1:  # Pijltje naar links ingedrukt
             print('left')
@@ -83,7 +80,7 @@ class Slider():
                 self.value = self.min
             else:
                 self.value = round(self.value-0.051, 1)
-           
+
         else:  # Pijltje naar rechts ingedrukt
             print('right')
             if self.value >= 0.9:
@@ -95,7 +92,7 @@ class Slider():
 
         return self.value
 
-
     def gamma(self):
-        gamma_factor = 1/((1-(self.value)**2)**0.5) # Formule gamma waarde, value is de snelheid in lichtsnelheden
+        # Formule gamma waarde, value is de snelheid in lichtsnelheden
+        gamma_factor = 1/((1-(self.value)**2)**0.5)
         return gamma_factor
