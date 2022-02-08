@@ -1,4 +1,4 @@
-'''Deze file rendert de slider en de tekst die daarboven staat'''
+'''Deze versie bevat tijddilatie en lengtecontractie'''
 # IMPORTEREN VAN DE LIBRARIES
 import pygame
 
