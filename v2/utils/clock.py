@@ -44,5 +44,5 @@ class Clock():
 
 
     def draw(self):
-        self.text = self.font.render("T: " + str(round(self.time, 1)), False, RED)
+        self.text = self.font.render(str(round(self.time, 1)), False, RED)
         self.screen.blit(self.text, self.coordinates)

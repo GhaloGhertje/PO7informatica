@@ -17,7 +17,7 @@ from utils.clock import Clock
 general_clock = pygame.time.Clock()  # Maakt een klok aan
 
 screen = Start.screen()  # Start als het ware het scherm op
-general_font, clock_font = Start.fonts('lcd_font.tff')
+general_font, clock_font = Start.fonts('lcd_font.ttf')
 
 PRESSED0, PRESSED1, PRESSED2, PRESSED3 = False, False, False, False
 # Welke simulatie er nu afgespeeld wordt. 0 = Lengtecontractie, 1 = tijddillatatie
@@ -30,8 +30,8 @@ MAX_SIMULATION = 1
 train = Train(screen, 'trein.png', general_font)
 # Slider(self, screen, font, name, min, max, y_pos, width, height)
 slider = Slider(screen, general_font, 'Snelheid', 0, 0.999, 300, 1620, 100)
-clock = Clock(screen, clock_font, 100, 980)
-reference_clock = Clock(screen, clock_font, 1820, 980)
+clock = Clock(screen, clock_font, 100, 800)
+reference_clock = Clock(screen, clock_font, 1640, 800)
 
 # Roept de variabelen op uit de classes Insert en Reset
 Insert.insert
