@@ -5,6 +5,8 @@ from timeit import default_timer as timer
 
 # VARIABLES
 RED = (255, 50, 50)
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
 
 
 # CLASS
@@ -44,5 +46,13 @@ class Clock():
 
 
     def draw(self):
-        self.text = self.font.render(str(round(self.time, 1)), False, RED)
-        self.screen.blit(self.text, self.coordinates)
+        self.text = str(round(self.time, 1))
+        self.text_render = self.font.render(self.text, False, RED)
+        self.text_width, self.text_height = self.font.size(self.text)
+        
+        self.rect_border = pygame.Rect(self.coordinates[0] -50, self.coordinates[1], self.text_width +100, self.text_height +50)
+        self.rect_background = pygame.Rect(self.coordinates[0] -25, self.coordinates[1] +25, self.text_width +50, self.text_height)
+        pygame.draw.rect(self.screen, WHITE, self.rect_border)
+        pygame.draw.rect(self.screen, BLACK, self.rect_background)
+
+        self.screen.blit(self.text_render, self.coordinates)
