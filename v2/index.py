@@ -77,7 +77,6 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED):  # Een functie die opnieuw geroepen
                     CURRENT_SIMULATION += 1
                 elif event.key == pygame.K_r:
                     PRESSED4 = True
-                    print("R: "+str(VALUE))
                     main(CURRENT_SIMULATION, VALUE, PAUSED)
                 elif event.key == pygame.K_SPACE:
                     PRESSED5 = True
