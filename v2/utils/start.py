@@ -19,7 +19,7 @@ class Start():
         pygame.font.init()
         general_font = pygame.font.SysFont('Arial Black', 18)
         
-        clock_font_0 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 200) #general_font
+        clock_font_0 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 180) #general_font
         clock_font_1 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 180) #general_font
         clock_font_2 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 160) #general_font
         clock_font_3 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 140) #general_font

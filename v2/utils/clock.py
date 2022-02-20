@@ -28,14 +28,13 @@ class Clock():
 
         self.start = False
         self.start_draw = False
-        self.power = 0
 
 
     def update(self):
         if not self.start:
             self.start = True
             self.start = self.end = timer()
-            self.time = self.delta_time = 0
+            self.time = self.delta_time = 0.0
         else:
             self.previous = self.end
             self.end = timer()
@@ -48,7 +47,7 @@ class Clock():
     def reference_update(self, delta_time, gamma_factor):
         if not self.start:
             self.start = True
-            self.time = 0
+            self.time = 0.0
         else:
             self.time += delta_time / gamma_factor
 
@@ -58,8 +57,7 @@ class Clock():
         self.text_render = self.font[self.font_number].render(self.text, False, RED)
         #self.text_width, self.text_height = self.font[self.font_number].size(self.text)
         
-        if (int(self.time) == 10**self.font_number):
-
+        if (round(self.time, 2) == 10.00**self.font_number):
             self.font_number += 1
             #print(str(self.text_width) + "w/d" + str(self.text_height))
             

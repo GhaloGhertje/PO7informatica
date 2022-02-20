@@ -14,11 +14,11 @@ GREY = (200, 200, 200)
 
 # CLASS
 class Slider():
-    def __init__(self, screen, font, name, min, max, y_pos, width, height):
+    def __init__(self, screen, font, name, value, min, max, y_pos, width, height):
         self.screen = screen
         self.font = font
 
-        self.value = 0  # Start hoeveelheid
+        self.value = value  # Start hoeveelheid
         self.min = min
         self.max = max
 
