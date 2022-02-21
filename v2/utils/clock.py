@@ -1,6 +1,7 @@
 # IMPORT LIBRARIES
 import pygame
 from timeit import default_timer as timer
+from math import sin, cos, radians
 
 
 # VARIABLES
@@ -62,9 +63,9 @@ class Clock():
             #print(str(self.text_width) + "w/d" + str(self.text_height))
             
         self.rect_border = pygame.Rect(self.coordinates[0] -2*self.border, self.coordinates[1], self.text_width +2*self.border, self.text_height +self.border)
-        self.rect_background = pygame.Rect(self.coordinates[0] -self.border, self.coordinates[1] +self.border, self.text_width, self.text_height -self.border)
+        #self.rect_background = pygame.Rect(self.coordinates[0] -self.border, self.coordinates[1] +self.border, self.text_width, self.text_height -self.border)
 
-        pygame.draw.rect(self.screen, WHITE, self.rect_border)
-        pygame.draw.rect(self.screen, BLACK, self.rect_background)
+        pygame.draw.rect(self.screen, WHITE, self.rect_border, 25, 10, 10, 10, 10, 10)
+        #pygame.draw.rect(self.screen, BLACK, self.rect_background)
 
         self.screen.blit(self.text_render, self.coordinates)
