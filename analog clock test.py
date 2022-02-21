@@ -14,11 +14,15 @@ def analog(time):
     #__init__
     center_pos = (400, 300)
     radius = 200
+    border = 10
 
     #update
-    end_pos = (center_pos[0] + math.sin(time)*radius, center_pos[1] + -math.cos(time)*radius)
+    radians = (time/6)*math.pi  # Elke 12 secondes 1 rondje
+    end_pos = (center_pos[0] + math.sin(radians)*radius, center_pos[1] + -math.cos(radians)*radius)
 
     #draw
+    pygame.draw.circle(screen, WHITE, center_pos, radius+border+1, border)
+    pygame.draw.circle(screen, BLUE, center_pos, 5)
     pygame.draw.line(screen, BLUE, center_pos, end_pos, 3)
     
 time = 0
