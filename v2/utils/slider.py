@@ -5,11 +5,7 @@ import pygame
 # VARIABLES
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
-RED = (255, 50, 50)
-YELLOW = (255, 255, 0)
-GREEN = (0, 255, 50)
 BLUE = (50, 50, 255)
-GREY = (200, 200, 200)
 
 
 # CLASS
