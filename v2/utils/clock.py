@@ -27,25 +27,29 @@ class Clock():
         #self.rectangle = pygame.Rect(100, 300, 100, 100)
         #self.surface = pygame.surface.Surface(self.rectangle)
 
-        self.start = False
-        self.start_draw = False
-
         # ANALOG CLOCK
         self.radius = text_width/2
-        self.center_pos = (self.radius+self.coordinates[0], 620)
-        self.border = 10
+        self.center_pos = (self.radius+self.coordinates[0] - self.border, 620)
+        self.circle_border = 10
+
+        # TIME & DRAW
+        self.start = False
+        self.start_draw = False
+        self.previous_time = 0.0
 
 
     def update(self):
         if not self.start:
             self.start = True
             self.start = self.end = timer()
-            self.time = self.delta_time = 0.0
+            self.delta_time = 0.0
+            self.time = self.previous_time
         else:
             self.previous = self.end
             self.end = timer()
-            self.time = self.end - self.start
+            #self.time = self.end - self.start
             self.delta_time = self.end - self.previous
+            self.time += self.delta_time
 
         self.calc_radians()
 
@@ -55,14 +59,18 @@ class Clock():
     def reference_update(self, delta_time, gamma_factor):
         if not self.start:
             self.start = True
-            self.time = 0.0
+            self.time = self.previous_time
         else:
             self.time += delta_time / gamma_factor
         
         self.calc_radians()
 
 
-    def draw(self):
+    def draw(self, paused):
+        # GENERAL
+        if paused:
+            self.pause_timer()
+
         # DIGITAL CLOCK
         self.text = str(round(self.time, 1))
         self.text_render = self.font[self.font_number].render(self.text, False, RED)
@@ -81,7 +89,7 @@ class Clock():
         self.screen.blit(self.text_render, self.coordinates)
 
         # ANALOG CLOCK
-        pygame.draw.circle(self.screen, WHITE, self.center_pos, self.radius+self.border+1, self.border)
+        pygame.draw.circle(self.screen, WHITE, self.center_pos, self.radius+self.circle_border+1, self.circle_border)
         pygame.draw.circle(self.screen, BLUE, self.center_pos, 5)
         pygame.draw.line(self.screen, BLUE, self.center_pos, self.end_pos, 3)
 
@@ -89,3 +97,7 @@ class Clock():
     def calc_radians(self):
         self.radians = (self.time/2)*math.pi  # Elke 12 secondes 1 rondje
         self.end_pos = (self.center_pos[0] + math.sin(self.radians)*self.radius, self.center_pos[1] - math.cos(self.radians)*self.radius)
+
+    def pause_timer(self):
+        self.start = False
+        self.previous_time = self.time

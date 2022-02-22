@@ -38,7 +38,7 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED):  # Een functie die opnieuw geroepen
     slider = Slider(screen, general_font, 'Snelheid', VALUE, 0, 0.999, 300, 1620, 100)
     # Clock(self, screen, font, x, y, text_width, text_height, border)
     clock = Clock(screen, clock_font, 100, 800, 280, 210, 25)
-    reference_clock = Clock(screen, clock_font, 1640, 800, 280, 210, 25)
+    reference_clock = Clock(screen, clock_font, 1540, 800, 280, 210, 25)
 
     # Roept de variabelen op uit de classes Insert en Reset
     Insert.insert
@@ -104,13 +104,13 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED):  # Een functie die opnieuw geroepen
             # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
             train.update(VALUE, gamma_factor)
             train.draw()  # Schrijft de trein op het scherm
-        else:
+        else:            
             if not PAUSED or not init_clocks:
                 init_clocks = True
                 delta_time = clock.update()
                 reference_clock.reference_update(delta_time, gamma_factor)
-            clock.draw()
-            reference_clock.draw()
+            clock.draw(PAUSED)
+            reference_clock.draw(PAUSED)
 
         # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
         general_clock.tick(60)
