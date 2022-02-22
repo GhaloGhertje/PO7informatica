@@ -1,11 +1,11 @@
 # IMPORT LIBRARIES
-import pygame
+import pygame, math
 from timeit import default_timer as timer
-from math import sin, cos, radians
 
 
 # VARIABLES
 RED = (255, 50, 50)
+BLUE = (50, 50, 255)
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 
@@ -30,6 +30,11 @@ class Clock():
         self.start = False
         self.start_draw = False
 
+        # ANALOG CLOCK
+        self.center_pos = (400, 300)
+        self.radius = 200
+        self.border = 10
+
 
     def update(self):
         if not self.start:
@@ -42,6 +47,8 @@ class Clock():
             self.time = self.end - self.start
             self.delta_time = self.end - self.previous
 
+        self.calc_radians()
+
         return self.delta_time
 
 
@@ -51,9 +58,12 @@ class Clock():
             self.time = 0.0
         else:
             self.time += delta_time / gamma_factor
+        
+        self.calc_radians()
 
 
     def draw(self):
+        # DIGITAL CLOCK
         self.text = str(round(self.time, 1))
         self.text_render = self.font[self.font_number].render(self.text, False, RED)
         #self.text_width, self.text_height = self.font[self.font_number].size(self.text)
@@ -69,3 +79,12 @@ class Clock():
         #pygame.draw.rect(self.screen, BLACK, self.rect_background)
 
         self.screen.blit(self.text_render, self.coordinates)
+
+        # ANALOG CLOCK
+        pygame.draw.circle(self.screen, WHITE, self.center_pos, self.radius+self.border+1, self.border)
+        pygame.draw.circle(self.screen, BLUE, self.center_pos, 5)
+        pygame.draw.line(self.screen, BLUE, self.center_pos, self.end_pos, 3)
+
+    def calc_radians(self):
+        self.radians = (self.time/6)*math.pi  # Elke 12 secondes 1 rondje
+        self.end_pos = (self.center_pos[0] + math.sin(self.radians)*self.radius, self.center_pos[1] - math.cos(self.radians)*self.radius)
