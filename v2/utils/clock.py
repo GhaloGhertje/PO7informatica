@@ -76,7 +76,7 @@ class Clock():
         self.text_render = self.font[self.font_number].render(self.text, False, RED)
         #self.text_width, self.text_height = self.font[self.font_number].size(self.text)
         
-        if (round(self.time, 2) == 10.00**self.font_number):
+        if (round(self.time, 2) == math.pow(10.00, self.font_number)):
             self.font_number += 1
             #print(str(self.text_width) + "w/d" + str(self.text_height))
             
