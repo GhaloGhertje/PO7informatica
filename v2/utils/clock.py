@@ -12,13 +12,15 @@ BLACK = (0, 0, 0)
 
 # CLASS
 class Clock():
-    def __init__(self, screen, font, x, y, text_width, text_height, border):
+    def __init__(self, screen, font, general_font, x, y, text_width, text_height, border):
         self.screen = screen
 
         self.font = font
+        self.general_font = general_font
         self.font_number = 0
 
         self.coordinates = (x, y)
+        self.text_coordinates = (x, y-3)
 
         self.text_width = text_width
         self.text_height = text_height
@@ -76,9 +78,22 @@ class Clock():
         self.text_render = self.font[self.font_number].render(self.text, False, RED)
         #self.text_width, self.text_height = self.font[self.font_number].size(self.text)
         
-        if (round(self.time, 2) == math.pow(10.00, self.font_number)):
+        if (round(self.time, 1) == math.pow(10.0, self.font_number)):
+            print(str(self.font_number))
+
+            self.text_render = self.general_font.render(self.text, False, RED)
+            self.text_render = self.font[self.font_number].render(self.text, False, RED)
+
+            self.size_before = self.font[self.font_number].size("10.00")
             self.font_number += 1
-            # self.coordinates = (self.coordinates[0], self.coordinates[1] - 10)
+            self.size_after = self.font[self.font_number].size("10.00")
+
+            self.width_compensation = (self.size_before[0] - self.size_after[0])/2
+            self.height_compensation = (self.size_before[1] - self.size_after[1])/2
+
+            #self.text_coordinates = (self.text_coordinates[0] - self.width_compensation, self.text_coordinates[1] + self.height_compensation)
+            self.text_coordinates = (self.text_coordinates[0], self.text_coordinates[1] + self.height_compensation)
+            
             #print(str(self.text_width) + "w/d" + str(self.text_height))
             
         self.rect_border = pygame.Rect(self.coordinates[0] -2*self.border, self.coordinates[1], self.text_width +2*self.border, self.text_height +self.border)
@@ -87,7 +102,7 @@ class Clock():
         pygame.draw.rect(self.screen, WHITE, self.rect_border, 25, 10, 10, 10, 10, 10)
         #pygame.draw.rect(self.screen, BLACK, self.rect_background)
 
-        self.screen.blit(self.text_render, self.coordinates)
+        self.screen.blit(self.text_render, self.text_coordinates)
 
         # ANALOG CLOCK
         pygame.draw.circle(self.screen, WHITE, self.center_pos, self.radius+self.circle_border+1, self.circle_border)

@@ -76,14 +76,12 @@ class Slider():
 
     def move_keyboard(self, direction):
         if direction == -1:  # Pijltje naar links ingedrukt
-            print('left')
             if self.value >= 0 and self.value <= 0.1:
                 self.value = self.min
             else:
                 self.value = round(self.value-0.051, 1)
 
         else:  # Pijltje naar rechts ingedrukt
-            print('right')
             if self.value >= 0.9:
                 self.value = self.max
             else:

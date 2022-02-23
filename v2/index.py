@@ -5,9 +5,7 @@ import pygame
 
 # IMPORTEREN VAN DE ZELFGEMAAKTE BENODIGDHEDEN
 from utils.start import Start
-from utils.insert import Insert
 from utils.stop import Stop
-from utils.reset import Reset
 from utils.train import Train
 from utils.slider import Slider
 from utils.clock import Clock
@@ -28,6 +26,7 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
 
     PRESSED0, PRESSED1, PRESSED2, PRESSED3, PRESSED4, PRESSED5, PRESSED6 = False, False, False, False, False, False, False
 
+
     # Welke simulatie er nu afgespeeld wordt. 0 = Lengtecontractie, 1 = tijddillatatie
     MIN_SIMULATION = 0
     MAX_SIMULATION = 1
@@ -37,16 +36,14 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
     train = Train(screen, 'trein.png', general_font)
     # Slider(self, screen, font, name, min, max, y_pos, width, height)
     slider = Slider(screen, general_font, 'Snelheid', VALUE, 0, 0.999999, 300, 1620, 100)
-    # Clock(self, screen, font, x, y, text_width, text_height, border)
-    clock = Clock(screen, clock_font, 100, 800, 280, 210, 25)
-    reference_clock = Clock(screen, clock_font, 1540, 800, 280, 210, 25)
+    # Clock(self, screen, font, general_font x, y, text_width, text_height, border)
+    clock = Clock(screen, clock_font, general_font, 100, 800, 280, 210, 25)
+    reference_clock = Clock(screen, clock_font, general_font, 1540, 800, 280, 210, 25)
 
-    # Roept de variabelen op uit de classes Insert en Reset
-    Insert.insert
-    Reset.reset
 
     # Maakt de evenement lijst leeg, zodat ingedrukte knoppen geen ongewenste effecten hebben
     pygame.event.clear()
+
 
     # MAIN LOOP
     while True:
@@ -78,6 +75,7 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
                     CURRENT_SIMULATION += 1
                 elif event.key == pygame.K_r:
                     PRESSED4 = True
+                    pygame.font.quit()
                     main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS)
                 elif event.key == pygame.K_SPACE:
                     PRESSED5 = True
@@ -85,6 +83,8 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
                 elif event.key == pygame.K_d:
                     PRESSED6 = True
                     DECIMALS = not DECIMALS
+                elif event.key == pygame.K_ESCAPE:
+                    Stop.exit()
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and PRESSED0:
