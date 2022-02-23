@@ -72,12 +72,10 @@ def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die o
                     VALUE = slider.move_keyboard(1)
                 elif event.key == pygame.K_DOWN and SIMULATION > MIN_SIMULATION:
                     SIMULATION -= 1
-                    if SIMULATION == 2:
-                        main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
+                    main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_UP and SIMULATION < MAX_SIMULATION:
                     SIMULATION += 1
-                    if SIMULATION == 3:
-                        main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
+                    main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_r:
                     pygame.font.quit()
                     main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
