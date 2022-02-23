@@ -20,7 +20,7 @@ class Clock():
         self.font_number = 0
 
         self.coordinates = (x, y)
-        self.text_coordinates = (x, y-3)
+        self.text_coordinates = (x-2, y-2)
 
         self.text_width = text_width
         self.text_height = text_height
@@ -49,7 +49,6 @@ class Clock():
         else:
             self.previous = self.end
             self.end = timer()
-            #self.time = self.end - self.start
             self.delta_time = self.end - self.previous
             self.time += self.delta_time
 
@@ -76,9 +75,8 @@ class Clock():
         # DIGITAL CLOCK
         self.text = str(round(self.time, 1))
         self.text_render = self.font[self.font_number].render(self.text, False, RED)
-        #self.text_width, self.text_height = self.font[self.font_number].size(self.text)
         
-        if (round(self.time, 1) == math.pow(10.0, self.font_number)):
+        if (round(self.time, 2) >= math.pow(10.00, self.font_number)):
             print(str(self.font_number))
 
             self.text_render = self.general_font.render(self.text, False, RED)
@@ -93,15 +91,9 @@ class Clock():
 
             #self.text_coordinates = (self.text_coordinates[0] - self.width_compensation, self.text_coordinates[1] + self.height_compensation)
             self.text_coordinates = (self.text_coordinates[0], self.text_coordinates[1] + self.height_compensation)
-            
-            #print(str(self.text_width) + "w/d" + str(self.text_height))
-            
+                        
         self.rect_border = pygame.Rect(self.coordinates[0] -2*self.border, self.coordinates[1], self.text_width +2*self.border, self.text_height +self.border)
-        #self.rect_background = pygame.Rect(self.coordinates[0] -self.border, self.coordinates[1] +self.border, self.text_width, self.text_height -self.border)
-
         pygame.draw.rect(self.screen, WHITE, self.rect_border, 25, 10, 10, 10, 10, 10)
-        #pygame.draw.rect(self.screen, BLACK, self.rect_background)
-
         self.screen.blit(self.text_render, self.text_coordinates)
 
         # ANALOG CLOCK
