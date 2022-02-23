@@ -37,11 +37,16 @@ class Slider():
         self.surface_rect = self.surface.get_rect()
         self.surface_rect.move_ip(self.x_position, self.y_position)
 
-    def draw(self):  # Plakt de slider op het scherm
+    def draw(self, decimals):  # Plakt de slider op het scherm
         # Statisch
         self.copy_surface = self.surface.copy()
 
         # Dynamisch
+        if decimals:
+            self.decimals = 6
+        else:
+            self.decimals = 3
+
         self.position_slider_x = int(
             (self.value-self.min)/(self.max-self.min)*self.width)
 
@@ -50,7 +55,7 @@ class Slider():
 
         self.screen.blit(self.copy_surface, (self.x_position, self.y_position))
         self.screen.blit(self.font.render(
-            "Snelheid: " + str(round(self.value, 3)) + " c", False, WHITE), (100, 50))
+            "Snelheid: " + str(round(self.value, self.decimals)) + " c", False, WHITE), (100, 50))
         self.value_ms = self.value * 2.99792458*10**8
         self.value_kmh = self.value_ms * 3.6
         self.screen.blit(self.font.render(

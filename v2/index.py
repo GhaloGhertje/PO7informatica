@@ -16,8 +16,9 @@ from utils.clock import Clock
 CURRENT_SIMULATION = 0
 VALUE = 0
 PAUSED = False
+DECIMALS = False
 
-def main(CURRENT_SIMULATION, VALUE, PAUSED):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
+def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
     # MAKEN VAN STANDAARD VARIABELEN EN OBJECTEN
     general_clock = pygame.time.Clock()  # Maakt een klok aan
 
@@ -25,7 +26,7 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED):  # Een functie die opnieuw geroepen
     general_font, clock_font = Start.fonts('lcd_font.ttf')
     init_clocks = False
 
-    PRESSED0, PRESSED1, PRESSED2, PRESSED3, PRESSED4, PRESSED5 = False, False, False, False, False, False
+    PRESSED0, PRESSED1, PRESSED2, PRESSED3, PRESSED4, PRESSED5, PRESSED6 = False, False, False, False, False, False, False
 
     # Welke simulatie er nu afgespeeld wordt. 0 = Lengtecontractie, 1 = tijddillatatie
     MIN_SIMULATION = 0
@@ -35,7 +36,7 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED):  # Een functie die opnieuw geroepen
     # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
     train = Train(screen, 'trein.png', general_font)
     # Slider(self, screen, font, name, min, max, y_pos, width, height)
-    slider = Slider(screen, general_font, 'Snelheid', VALUE, 0, 0.999, 300, 1620, 100)
+    slider = Slider(screen, general_font, 'Snelheid', VALUE, 0, 0.999999, 300, 1620, 100)
     # Clock(self, screen, font, x, y, text_width, text_height, border)
     clock = Clock(screen, clock_font, 100, 800, 280, 210, 25)
     reference_clock = Clock(screen, clock_font, 1540, 800, 280, 210, 25)
@@ -77,10 +78,13 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED):  # Een functie die opnieuw geroepen
                     CURRENT_SIMULATION += 1
                 elif event.key == pygame.K_r:
                     PRESSED4 = True
-                    main(CURRENT_SIMULATION, VALUE, PAUSED)
+                    main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS)
                 elif event.key == pygame.K_SPACE:
                     PRESSED5 = True
                     PAUSED = not PAUSED
+                elif event.key == pygame.K_d:
+                    PRESSED6 = True
+                    DECIMALS = not DECIMALS
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT and PRESSED0:
@@ -95,10 +99,12 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED):  # Een functie die opnieuw geroepen
                     PRESSED4 = False
                 elif event.key == pygame.K_SPACE and PRESSED5:
                     PRESSED5 = False
+                elif event.key == pygame.K_d and PRESSED6:
+                    PRESSED6 = False
 
         VALUE = slider.move()
         gamma_factor = slider.gamma()
-        slider.draw()
+        slider.draw(DECIMALS)
 
         if CURRENT_SIMULATION == 0:
             # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
@@ -116,4 +122,4 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED):  # Een functie die opnieuw geroepen
         general_clock.tick(60)
         pygame.display.flip()  # Update het scherm
 
-main(CURRENT_SIMULATION, VALUE, PAUSED)
+main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS)
