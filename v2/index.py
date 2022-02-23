@@ -12,20 +12,21 @@ from utils.clock import Clock
 
 # CONSTANTEN
 # De status van de simulatie, 0 = Lengtecontractie, 1 = tijddillatatie, 2 = beide
-MIN_SIMULATION = 0
-MAX_SIMULATION = 2
+MIN_SIMULATION = 1
+MAX_SIMULATION = 3
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 50, 50)
 BLUE = (50, 50, 255)
 
 # VARIABELEN DIE NIET GERESET MOETEN WORDEN EN DIE WEL KUNNEN VERANDEREN
-CURRENT_SIMULATION = 0
+SIMULATION = 1
 VALUE = 0
 PAUSED = False
 DECIMALS = False
+PERSPECTIVE = "A"
 
-def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
+def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
     # MAKEN VAN STANDAARD VARIABELEN EN OBJECTEN
     general_clock = pygame.time.Clock()  # Maakt een klok aan
 
@@ -33,7 +34,6 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
     general_font, clock_font = Start.fonts('lcd_font.ttf')
     init_clocks = False
 
-    PRESSED0, PRESSED1, PRESSED2, PRESSED3, PRESSED4, PRESSED5, PRESSED6 = False, False, False, False, False, False, False
 
     # Maakt objecten uit de classes Train en Slider
     # Train(self, screen, image_name, font)
@@ -67,55 +67,45 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
 
             elif event.type == pygame.KEYDOWN: # Alle evenementen waarbij de knop is ingedrukt
                 if event.key == pygame.K_LEFT:
-                    PRESSED0 = True
                     VALUE = slider.move_keyboard(-1)
                 elif event.key == pygame.K_RIGHT:
-                    PRESSED1 = True
                     VALUE = slider.move_keyboard(1)
-                elif event.key == pygame.K_DOWN and CURRENT_SIMULATION > MIN_SIMULATION:
-                    PRESSED2 = True
-                    CURRENT_SIMULATION -= 1
-                elif event.key == pygame.K_UP and CURRENT_SIMULATION < MAX_SIMULATION:
-                    PRESSED3 = True
-                    CURRENT_SIMULATION += 1
+                elif event.key == pygame.K_DOWN and SIMULATION > MIN_SIMULATION:
+                    SIMULATION -= 1
+                    if SIMULATION == 2:
+                        main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
+                elif event.key == pygame.K_UP and SIMULATION < MAX_SIMULATION:
+                    SIMULATION += 1
+                    if SIMULATION == 3:
+                        main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_r:
-                    PRESSED4 = True
                     pygame.font.quit()
-                    main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS)
+                    main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_SPACE:
-                    PRESSED5 = True
                     PAUSED = not PAUSED
                 elif event.key == pygame.K_d:
-                    PRESSED6 = True
                     DECIMALS = not DECIMALS
+                elif event.key == pygame.K_p:
+                    if PERSPECTIVE == "A":
+                        PERSPECTIVE = "B"
+                        main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
+                    else:
+                        PERSPECTIVE = "A"
+                        main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_ESCAPE:
                     Stop.exit()
 
-            elif event.type == pygame.KEYUP: # Alle evenementen waarbij de knop is losgelaten
-                if event.key == pygame.K_LEFT and PRESSED0:
-                    PRESSED0 = False
-                elif event.key == pygame.K_RIGHT and PRESSED1:
-                    PRESSED1 = False
-                elif event.key == pygame.K_DOWN and PRESSED2:
-                    PRESSED2 = False
-                elif event.key == pygame.K_UP and PRESSED3:
-                    PRESSED3 = False
-                elif event.key == pygame.K_r and PRESSED4:
-                    PRESSED4 = False
-                elif event.key == pygame.K_SPACE and PRESSED5:
-                    PRESSED5 = False
-                elif event.key == pygame.K_d and PRESSED6:
-                    PRESSED6 = False
+
 
         VALUE = slider.move()
         gamma_factor = slider.gamma()
         slider.draw(DECIMALS)
 
-        if CURRENT_SIMULATION == 0 or CURRENT_SIMULATION == 2:
+        if SIMULATION == 1 or SIMULATION == 3:
             # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
             train.update(VALUE, gamma_factor)
             train.draw()  # Schrijft de trein op het scherm
-        if CURRENT_SIMULATION == 1 or CURRENT_SIMULATION == 2:
+        if SIMULATION == 2 or SIMULATION == 3:
             if not PAUSED or not init_clocks:
                 init_clocks = True
                 delta_time = clock.update()
@@ -123,10 +113,10 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
             clock.draw(PAUSED)
             reference_clock.draw(PAUSED)
 
-        screen.blit(general_font.render(str(CURRENT_SIMULATION+1), False, WHITE), (70,130))
+        screen.blit(general_font.render(str(SIMULATION) + " " + PERSPECTIVE, False, WHITE), (70,130))
 
         # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
         general_clock.tick(60)
         pygame.display.flip()  # Update het scherm
 
-main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS)
+main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)
