@@ -78,6 +78,7 @@ class Clock():
         
         if (round(self.time, 2) == math.pow(10.00, self.font_number)):
             self.font_number += 1
+            # self.coordinates = (self.coordinates[0], self.coordinates[1] - 10)
             #print(str(self.text_width) + "w/d" + str(self.text_height))
             
         self.rect_border = pygame.Rect(self.coordinates[0] -2*self.border, self.coordinates[1], self.text_width +2*self.border, self.text_height +self.border)
