@@ -10,7 +10,16 @@ from utils.train import Train
 from utils.slider import Slider
 from utils.clock import Clock
 
-# VARIABELEN DIE NIET GERESET MOETEN WORDEN
+# CONSTANTEN
+# De status van de simulatie, 0 = Lengtecontractie, 1 = tijddillatatie, 2 = beide
+MIN_SIMULATION = 0
+MAX_SIMULATION = 2
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255, 50, 50)
+BLUE = (50, 50, 255)
+
+# VARIABELEN DIE NIET GERESET MOETEN WORDEN EN DIE WEL KUNNEN VERANDEREN
 CURRENT_SIMULATION = 0
 VALUE = 0
 PAUSED = False
@@ -26,13 +35,8 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
 
     PRESSED0, PRESSED1, PRESSED2, PRESSED3, PRESSED4, PRESSED5, PRESSED6 = False, False, False, False, False, False, False
 
-
-    # Welke simulatie er nu afgespeeld wordt. 0 = Lengtecontractie, 1 = tijddillatatie
-    MIN_SIMULATION = 0
-    MAX_SIMULATION = 1
-
     # Maakt objecten uit de classes Train en Slider
-    # Maakt de trein aan, gedeeltelijk gebaseerd op de waardes van het scherm
+    # Train(self, screen, image_name, font)
     train = Train(screen, 'trein.png', general_font)
     # Slider(self, screen, font, name, min, max, y_pos, width, height)
     slider = Slider(screen, general_font, 'Snelheid', VALUE, 0, 0.999999, 300, 1620, 100)
@@ -41,7 +45,7 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
     reference_clock = Clock(screen, clock_font, general_font, 1540, 800, 280, 210, 25)
 
 
-    # Maakt de evenement lijst leeg, zodat ingedrukte knoppen geen ongewenste effecten hebben
+    # Maakt de evenement lijst (van ingedrukte) leeg, zodat ingedrukte knoppen geen ongewenste effecten hebben
     pygame.event.clear()
 
 
@@ -50,6 +54,7 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
         # Plakt een zwarte laag op het scherm die oude geschreven plaatjes ongedaan maakt
         screen.fill((0, 0, 0))
 
+        # Gaat voor elk event na wat er moet gebeuren
         for event in pygame.event.get():
             if event.type == pygame.QUIT:  # Zorgt voor het afsluiten
                 Stop.exit()
@@ -60,7 +65,7 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
             elif event.type == pygame.MOUSEBUTTONUP:
                 slider.click = False
 
-            elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN: # Alle evenementen waarbij de knop is ingedrukt
                 if event.key == pygame.K_LEFT:
                     PRESSED0 = True
                     VALUE = slider.move_keyboard(-1)
@@ -86,7 +91,7 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
                 elif event.key == pygame.K_ESCAPE:
                     Stop.exit()
 
-            elif event.type == pygame.KEYUP:
+            elif event.type == pygame.KEYUP: # Alle evenementen waarbij de knop is losgelaten
                 if event.key == pygame.K_LEFT and PRESSED0:
                     PRESSED0 = False
                 elif event.key == pygame.K_RIGHT and PRESSED1:
@@ -106,17 +111,19 @@ def main(CURRENT_SIMULATION, VALUE, PAUSED, DECIMALS):  # Een functie die opnieu
         gamma_factor = slider.gamma()
         slider.draw(DECIMALS)
 
-        if CURRENT_SIMULATION == 0:
+        if CURRENT_SIMULATION == 0 or CURRENT_SIMULATION == 2:
             # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
             train.update(VALUE, gamma_factor)
             train.draw()  # Schrijft de trein op het scherm
-        else:            
+        if CURRENT_SIMULATION == 1 or CURRENT_SIMULATION == 2:
             if not PAUSED or not init_clocks:
                 init_clocks = True
                 delta_time = clock.update()
                 reference_clock.reference_update(delta_time, gamma_factor)
             clock.draw(PAUSED)
             reference_clock.draw(PAUSED)
+
+        screen.blit(general_font.render(str(CURRENT_SIMULATION+1), False, WHITE), (70,130))
 
         # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
         general_clock.tick(60)

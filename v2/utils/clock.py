@@ -3,11 +3,11 @@ import pygame, math
 from timeit import default_timer as timer
 
 
-# VARIABLES
-RED = (255, 50, 50)
-BLUE = (50, 50, 255)
+# CONSTANTEN
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+RED = (255, 50, 50)
+BLUE = (50, 50, 255)
 
 
 # CLASS
@@ -93,10 +93,15 @@ class Clock():
             self.text_coordinates = (self.text_coordinates[0], self.text_coordinates[1] + self.height_compensation)
                         
         self.rect_border = pygame.Rect(self.coordinates[0] -2*self.border, self.coordinates[1], self.text_width +2*self.border, self.text_height +self.border)
+        self.rect_background = pygame.Rect(self.coordinates[0] -self.border, self.coordinates[1] +self.border, self.text_width, self.text_height -self.border)
+
         pygame.draw.rect(self.screen, WHITE, self.rect_border, 25, 10, 10, 10, 10, 10)
+        pygame.draw.rect(self.screen, BLACK, self.rect_background)
+
         self.screen.blit(self.text_render, self.text_coordinates)
 
         # ANALOG CLOCK
+        pygame.draw.circle(self.screen, BLACK, self.center_pos, self.radius+1)
         pygame.draw.circle(self.screen, WHITE, self.center_pos, self.radius+self.circle_border+1, self.circle_border)
         pygame.draw.circle(self.screen, BLUE, self.center_pos, 5)
         pygame.draw.line(self.screen, BLUE, self.center_pos, self.end_pos, 3)
