@@ -74,6 +74,7 @@ class Clock():
         if paused:
             self.pause_timer()
 
+
         if perspective == "A":
             if self.name == "clock":
                 text_p = "A"
@@ -82,9 +83,9 @@ class Clock():
             self.screen.blit(self.general_font[6].render(text_p, False, BLUE), (self.coordinates[0] +101, self.coordinates[1] +235))
         else:
             if self.name == "clock":
-                text_p = "B"
-            else:
                 text_p = "A"
+            else:
+                text_p = "B"
             self.screen.blit(self.general_font[6].render(text_p, False, RED), (self.coordinates[0] +101, self.coordinates[1] +235))
 
         # DIGITAL CLOCK

@@ -104,17 +104,22 @@ def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die o
             train.update(VALUE, gamma_factor)
             train.draw()  # Schrijft de trein op het scherm
         if SIMULATION == 2 or SIMULATION == 3:
-            if not PAUSED or not init_clocks:
-                init_clocks = True
-                delta_time = clock.update()
-                reference_clock.reference_update(delta_time, gamma_factor)
-            clock.draw(PAUSED, PERSPECTIVE)
-            reference_clock.draw(PAUSED, PERSPECTIVE)
-
-        if PERSPECTIVE == "A":
-            screen.blit(general_font[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, BLUE), (70,130))
-        else:
-            screen.blit(general_font[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, RED), (70,130))
+            if PERSPECTIVE == "A":
+                if not PAUSED or not init_clocks:
+                    init_clocks = True
+                    delta_time = clock.update()
+                    reference_clock.reference_update(delta_time, gamma_factor)
+                clock.draw(PAUSED, PERSPECTIVE)
+                reference_clock.draw(PAUSED, PERSPECTIVE)
+                screen.blit(general_font[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, BLUE), (70,130))
+            else:
+                if not PAUSED or not init_clocks:
+                    init_clocks = True
+                    delta_time = reference_clock.update()
+                    clock.reference_update(delta_time, gamma_factor)
+                clock.draw(PAUSED, PERSPECTIVE)
+                reference_clock.draw(PAUSED, PERSPECTIVE)
+                screen.blit(general_font[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, RED), (70,130))
 
         # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
         general_clock.tick(60)
