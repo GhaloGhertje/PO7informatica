@@ -44,7 +44,7 @@ class Train():
         # Plaatje als trein
         self.screen.blit(self.image, (self.rectangle.x, self.rectangle.y))
         # int() doet niet hetzelfde als round(), int() haalt de decimalen weg zonder af te ronden
-        self.percentage_txt = self.font.render(
+        self.percentage_txt = self.font[4].render(
             str(int(round(self.percentage, 0))) + "%", False, (255, 255, 255))
         self.percentage_rect = self.percentage_txt.get_rect(
             center=(self.x_mid_position, self.y_mid_position-80))

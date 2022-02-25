@@ -40,9 +40,9 @@ def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die o
     train = Train(screen, 'trein.png', general_font)
     # Slider(self, screen, font, name, min, max, y_pos, width, height)
     slider = Slider(screen, general_font, 'Snelheid', VALUE, 0, 0.999999, 300, 1620, 100)
-    # Clock(self, screen, font, general_font x, y, text_width, text_height, border)
-    clock = Clock(screen, clock_font, general_font, 100, 800, 280, 210, 25)
-    reference_clock = Clock(screen, clock_font, general_font, 1540, 800, 280, 210, 25)
+    # Clock(self, screen, font, general_font, name, x, y, text_width, text_height, border)
+    clock = Clock(screen, clock_font, general_font, "clock", 100, 800, 280, 210, 25)
+    reference_clock = Clock(screen, clock_font, general_font, "reference_clock", 1540, 800, 280, 210, 25)
 
 
     # Maakt de evenement lijst (van ingedrukte) leeg, zodat ingedrukte knoppen geen ongewenste effecten hebben
@@ -108,10 +108,13 @@ def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die o
                 init_clocks = True
                 delta_time = clock.update()
                 reference_clock.reference_update(delta_time, gamma_factor)
-            clock.draw(PAUSED)
-            reference_clock.draw(PAUSED)
+            clock.draw(PAUSED, PERSPECTIVE)
+            reference_clock.draw(PAUSED, PERSPECTIVE)
 
-        screen.blit(general_font.render(str(SIMULATION) + " " + PERSPECTIVE, False, WHITE), (70,130))
+        if PERSPECTIVE == "A":
+            screen.blit(general_font[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, BLUE), (70,130))
+        else:
+            screen.blit(general_font[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, RED), (70,130))
 
         # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
         general_clock.tick(60)

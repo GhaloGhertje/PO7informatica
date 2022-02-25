@@ -1,4 +1,5 @@
 # IMPORT LIBRARIES
+from re import A
 import pygame, math
 from timeit import default_timer as timer
 
@@ -12,13 +13,14 @@ BLUE = (50, 50, 255)
 
 # CLASS
 class Clock():
-    def __init__(self, screen, font, general_font, x, y, text_width, text_height, border):
+    def __init__(self, screen, font, general_font, name, x, y, text_width, text_height, border):
         self.screen = screen
 
         self.font = font
         self.general_font = general_font
         self.font_number = 0
 
+        self.name = name
         self.coordinates = (x, y)
         self.text_coordinates = (x-2, y-2)
 
@@ -67,10 +69,23 @@ class Clock():
         self.calc_radians()
 
 
-    def draw(self, paused):
+    def draw(self, paused, perspective):
         # GENERAL
         if paused:
             self.pause_timer()
+
+        if perspective == "A":
+            if self.name == "clock":
+                text_p = "A"
+            else:
+                text_p = "B"
+            self.screen.blit(self.general_font[6].render(text_p, False, BLUE), (self.coordinates[0] +101, self.coordinates[1] +235))
+        else:
+            if self.name == "clock":
+                text_p = "B"
+            else:
+                text_p = "A"
+            self.screen.blit(self.general_font[6].render(text_p, False, RED), (self.coordinates[0] +101, self.coordinates[1] +235))
 
         # DIGITAL CLOCK
         self.text = str(round(self.time, 1))
@@ -79,7 +94,7 @@ class Clock():
         if (round(self.time, 2) >= math.pow(10.00, self.font_number)):
             print(str(self.font_number))
 
-            self.text_render = self.general_font.render(self.text, False, RED)
+            self.text_render = self.general_font[0].render(self.text, False, RED)
             self.text_render = self.font[self.font_number].render(self.text, False, RED)
 
             self.size_before = self.font[self.font_number].size("10.00")
@@ -110,6 +125,7 @@ class Clock():
     def calc_radians(self):
         self.radians = (self.time/2)*math.pi  # Elke 12 secondes 1 rondje
         self.end_pos = (self.center_pos[0] + math.sin(self.radians)*self.radius, self.center_pos[1] - math.cos(self.radians)*self.radius)
+
 
     def pause_timer(self):
         self.start = False

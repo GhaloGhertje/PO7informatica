@@ -26,7 +26,7 @@ class Slider():
         self.surface = pygame.surface.Surface((self.width, self.height))
         self.click = False  # Als deze aanstaat wordt er met de linker muisknop geklikt op de slider
 
-        self.txt_surf = self.font.render(name, 1, BLACK)
+        self.txt_surf = self.font[4].render(name, 1, BLACK)
         self.txt_rect = self.txt_surf.get_rect(
             center=(self.width/2, (self.height/2)-25))
 
@@ -54,13 +54,13 @@ class Slider():
                          0, 0, self.position_slider_x, self.height])  # Tekent het blauwe gedeelte
 
         self.screen.blit(self.copy_surface, (self.x_position, self.y_position))
-        self.screen.blit(self.font.render(
+        self.screen.blit(self.font[0].render(
             "Snelheid: " + str(round(self.value, self.decimals)) + " c", False, WHITE), (100, 50))
         self.value_ms = self.value * 2.99792458*10**8
         self.value_kmh = self.value_ms * 3.6
-        self.screen.blit(self.font.render(
+        self.screen.blit(self.font[0].render(
             "Snelheid: " + str("{:e}".format(int(self.value_ms))) + " m/s", False, WHITE), (800, 50))  # "{:e}.format()" zet de nummers in de wetenschappelijke notatie (bijvoorbeeld: 1,234e+8)
-        self.screen.blit(self.font.render(
+        self.screen.blit(self.font[0].render(
             "Snelheid: " + str("{:e}".format(int(self.value_kmh))) + " km/h", False, WHITE), (1500, 50))
 
     def move(self):  # Verandert de waarde van de snelheid op basis van de muispositie

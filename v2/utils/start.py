@@ -17,7 +17,15 @@ class Start():
     def fonts(file_name):
         # Start de font library op en maakt een object aan van een systeem font
         pygame.font.init()
-        general_font = pygame.font.SysFont('Arial Black', 18)
+        general_font_0 = pygame.font.SysFont('Arial Black', 18)
+        general_font_1 = pygame.font.SysFont('Arial Black', 20)
+        general_font_2 = pygame.font.SysFont('Arial Black', 22)
+        general_font_3 = pygame.font.SysFont('Arial Black', 24)
+        general_font_4 = pygame.font.SysFont('Arial Black', 26)
+        general_font_5 = pygame.font.SysFont('Arial Black', 28)
+        general_font_6 = pygame.font.SysFont('Arial Black', 30)
+
+        general_font = [general_font_0, general_font_1, general_font_2, general_font_3, general_font_4, general_font_5, general_font_6]
         
         clock_font_0 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 180) #general_font
         clock_font_1 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 180) #general_font
