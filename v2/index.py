@@ -1,4 +1,15 @@
-'''Deze versie bevat tijddilatie en lengtecontractie'''
+'''
+Simulatie Speciale Relativiteitstheorie
+
+Gemaakt door:
+Nico Nap
+Sven Wijnen
+Simone ter Riet
+Mitchell Brinkhof
+Koen van der Horst
+
+6Vc / 6Vin1
+'''
 # IMPORTEREN VAN DE LIBRARIES
 import pygame
 
@@ -10,6 +21,7 @@ from utils.train import Train
 from utils.slider import Slider
 from utils.clock import Clock
 
+
 # CONSTANTEN
 # De status van de simulatie, 0 = Lengtecontractie, 1 = tijddillatatie, 2 = beide
 MIN_SIMULATION = 1
@@ -19,12 +31,14 @@ BLACK = (0, 0, 0)
 RED = (255, 50, 50)
 BLUE = (50, 50, 255)
 
+
 # VARIABELEN DIE NIET GERESET MOETEN WORDEN EN DIE WEL KUNNEN VERANDEREN
 SIMULATION = 1
 VALUE = 0
 PAUSED = False
 DECIMALS = False
 PERSPECTIVE = "A"
+
 
 def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
     # MAKEN VAN STANDAARD VARIABELEN EN OBJECTEN
@@ -44,7 +58,6 @@ def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die o
     clock = Clock(screen, clock_font, general_font, "clock", 100, 800, 280, 210, 25)
     reference_clock = Clock(screen, clock_font, general_font, "reference_clock", 1540, 800, 280, 210, 25)
 
-
     # Maakt de evenement lijst (van ingedrukte) leeg, zodat ingedrukte knoppen geen ongewenste effecten hebben
     pygame.event.clear()
 
@@ -56,15 +69,17 @@ def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die o
 
         # Gaat voor elk event na wat er moet gebeuren
         for event in pygame.event.get():
+            # EXIT
             if event.type == pygame.QUIT:  # Zorgt voor het afsluiten
                 Stop.exit()
+    	    # MOUSE
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_position = pygame.mouse.get_pos()
                 if slider.surface_rect.collidepoint(mouse_position):
                     slider.click = True
             elif event.type == pygame.MOUSEBUTTONUP:
                 slider.click = False
-
+            # KEYS
             elif event.type == pygame.KEYDOWN: # Alle evenementen waarbij de knop is ingedrukt
                 if event.key == pygame.K_LEFT:
                     VALUE = slider.move_keyboard(-1)
@@ -93,16 +108,18 @@ def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die o
                 elif event.key == pygame.K_ESCAPE:
                     Stop.exit()
 
-
-
+        # Berekent waarde van de snelheid en de gammafactor
         VALUE = slider.move()
         gamma_factor = slider.gamma()
+        # Past de slider aan op het scherm
         slider.draw(DECIMALS)
 
+        # BEPAALT SIMULATIE OP HET SCHERM
         if SIMULATION == 1 or SIMULATION == 3:
             # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
             train.update(VALUE, gamma_factor)
-            train.draw()  # Schrijft de trein op het scherm
+            train.draw()  # Schrijft de trein op het scherm\
+
         if SIMULATION == 2 or SIMULATION == 3:
             if PERSPECTIVE == "A":
                 if not PAUSED or not init_clocks:
@@ -122,7 +139,8 @@ def main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die o
                 screen.blit(general_font[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, RED), (70,130))
 
         # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
-        general_clock.tick(60)
+        general_clock.tick(60)  # 60 fps is maximaal
         pygame.display.flip()  # Update het scherm
+
 
 main(SIMULATION, VALUE, PAUSED, DECIMALS, PERSPECTIVE)

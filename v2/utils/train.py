@@ -28,6 +28,7 @@ class Train():
             self.original_image, self.original_image_rectangle.size)
         self.font = font
 
+
     def update(self, velocity, gamma_factor):
         if velocity != self.old_velocity:  # Beperkt het aantal keer dat de trein geupdate moet worden als er niets veranderd is
             self.old_velocity = velocity
@@ -39,6 +40,7 @@ class Train():
 
             self.image = pygame.transform.scale(
                 self.original_image, self.rectangle.size)
+
 
     def draw(self):
         # Plaatje als trein

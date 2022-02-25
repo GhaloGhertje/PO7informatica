@@ -1,5 +1,5 @@
 # IMPORT LIBRARIES
-import sys, pygame, os
+import sys, pygame
 
 
 # CLASS

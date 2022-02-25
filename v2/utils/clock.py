@@ -74,7 +74,6 @@ class Clock():
         if paused:
             self.pause_timer()
 
-
         if perspective == "A":
             if self.name == "clock":
                 text_p = "A"
