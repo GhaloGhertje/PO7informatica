@@ -34,6 +34,8 @@ BLUE = (50, 50, 255)
 
 
 # VARIABELEN DIE NIET GERESET MOETEN WORDEN EN DIE WEL KUNNEN VERANDEREN
+SCREEN = Start.screen()  # Start als het ware het scherm op
+FONT = Start.fonts() # Start de font library en maakt de algemene font aan
 SIMULATION = 1
 VALUE = 0
 GAMMA_FACTOR = 1
@@ -42,27 +44,33 @@ DECIMALS = False
 PERSPECTIVE = "A"
 
 
-def main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
+def status(PERSPECTIVE, SIMULATION):
+    if PERSPECTIVE == "A":
+        SCREEN.blit(FONT[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, BLUE), (70,130))
+    else:
+        SCREEN.blit(FONT[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, RED), (70,130))
+
+
+def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
     # MAKEN VAN STANDAARD VARIABELEN EN OBJECTEN
     general_clock = pygame.time.Clock()  # Maakt een klok aan
 
-    screen = Start.screen()  # Start als het ware het scherm op
-    general_font, clock_font = Start.fonts('lcd_font.ttf')
+    clock_font = Start.clock_fonts('lcd_font.ttf')
     init_clocks = False
 
 
     # Maakt objecten uit de classes Train en Slider
     # Train(self, screen, image_name, font)
-    train = Train(screen, 'trein.png', general_font)
+    train = Train(SCREEN, 'trein.png', FONT)
     # Slider(self, screen, font, name, min, max, y_pos, width, height)
-    slider = Slider(screen, general_font, 'Snelheid', VALUE, 0, 0.999999, 300, 1620, 100)
+    slider = Slider(SCREEN, FONT, 'Snelheid', VALUE, 0, 0.999999, 300, 1620, 100)
     # Clock(self, screen, font, general_font, name, x, y, text_width, text_height, border)
-    clock = Clock(screen, clock_font, general_font, "clock", 100, 800, 280, 210, 25)
-    reference_clock = Clock(screen, clock_font, general_font, "reference_clock", 1540, 800, 280, 210, 25)
+    clock = Clock(SCREEN, clock_font, FONT, "clock", 100, 800, 280, 210, 25)
+    reference_clock = Clock(SCREEN, clock_font, FONT, "reference_clock", 1540, 800, 280, 210, 25)
     # Background(self, screen, image_name)
-    background = Background(screen, 'achtergrond.png', general_font)
-    reference_background = Background(screen, 'achtergrond_ref.png', general_font)
-    reference_foreground = Background(screen, 'voorgrond_ref.png', general_font)
+    background = Background(SCREEN, 'achtergrond.png', FONT)
+    reference_background = Background(SCREEN, 'achtergrond_ref.png', FONT)
+    reference_foreground = Background(SCREEN, 'voorgrond_ref.png', FONT)
 
     # Maakt de evenement lijst (van ingedrukte) leeg, zodat ingedrukte knoppen geen ongewenste effecten hebben
     pygame.event.clear()
@@ -74,9 +82,13 @@ def main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een
         if PERSPECTIVE == "A":
             background.draw()
         else:
-            reference_background.draw()
-            reference_foreground.update(VALUE, GAMMA_FACTOR)
-            reference_foreground.draw_ref()
+            if SIMULATION == 1:
+                reference_foreground.draw()
+            else:
+                reference_background.draw()
+
+                reference_foreground.update(VALUE, GAMMA_FACTOR)
+                reference_foreground.draw_ref()
 
         # Gaat voor elk event na wat er moet gebeuren
         for event in pygame.event.get():
@@ -98,13 +110,13 @@ def main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een
                     VALUE = slider.move_keyboard(1)
                 elif event.key == pygame.K_DOWN and SIMULATION > MIN_SIMULATION:
                     SIMULATION -= 1
-                    main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
+                    main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_UP and SIMULATION < MAX_SIMULATION:
                     SIMULATION += 1
-                    main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
+                    main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_r:
                     pygame.font.quit()
-                    main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
+                    main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_SPACE:
                     PAUSED = not PAUSED
                 elif event.key == pygame.K_d:
@@ -112,10 +124,10 @@ def main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een
                 elif event.key == pygame.K_p:
                     if PERSPECTIVE == "A":
                         PERSPECTIVE = "B"
-                        main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
+                        main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                     else:
                         PERSPECTIVE = "A"
-                        main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
+                        main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_ESCAPE:
                     Stop.exit()
 
@@ -127,9 +139,14 @@ def main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een
 
         # BEPAALT SIMULATIE OP HET SCHERM
         if SIMULATION == 2 or SIMULATION == 3:
-            # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
-            train.update(VALUE, GAMMA_FACTOR)
-            train.draw(True)  # Schrijft de trein op het scherm
+            if PERSPECTIVE == "A":
+                # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
+                train.update(VALUE, GAMMA_FACTOR)
+                train.draw(True)  # Schrijft de trein op het scherm
+            if PERSPECTIVE == "A":
+                # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
+                train.update(VALUE, GAMMA_FACTOR)
+                train.draw(True)  # Schrijft de trein op het scherm
 
         if SIMULATION == 1 or SIMULATION == 3:
             if PERSPECTIVE == "A":
@@ -143,7 +160,6 @@ def main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een
                     reference_clock.reference_update(delta_time, GAMMA_FACTOR)
                 clock.draw(PAUSED, PERSPECTIVE)
                 reference_clock.draw(PAUSED, PERSPECTIVE)
-                screen.blit(general_font[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, BLUE), (70,130))
 
             else:
                 if not PAUSED or not init_clocks:
@@ -152,11 +168,12 @@ def main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een
                     clock.reference_update(delta_time, GAMMA_FACTOR)
                 clock.draw(PAUSED, PERSPECTIVE)
                 reference_clock.draw(PAUSED, PERSPECTIVE)
-                screen.blit(general_font[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, RED), (70,130))
+
+        status(PERSPECTIVE, SIMULATION)
 
         # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
         general_clock.tick(60)  # 60 frames per seconde is maximaal
         pygame.display.flip()  # Update het scherm
 
 
-main(SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
+main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)

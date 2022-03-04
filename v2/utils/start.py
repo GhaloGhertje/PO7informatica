@@ -18,9 +18,10 @@ class Start():
         return screen # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is
 
 
-    def fonts(file_name):
+    def fonts():
         # Start de font library op en maakt een object aan van een systeem font
         pygame.font.init()
+
         general_font_0 = pygame.font.SysFont('Arial Black', 18)
         general_font_1 = pygame.font.SysFont('Arial Black', 20)
         general_font_2 = pygame.font.SysFont('Arial Black', 22)
@@ -29,7 +30,14 @@ class Start():
         general_font_5 = pygame.font.SysFont('Arial Black', 28)
         general_font_6 = pygame.font.SysFont('Arial Black', 30)
 
-        general_font = [general_font_0, general_font_1, general_font_2, general_font_3, general_font_4, general_font_5, general_font_6]
+        font = [general_font_0, general_font_1, general_font_2, general_font_3, general_font_4, general_font_5, general_font_6]
+
+        return font # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is
+
+
+    def clock_fonts(file_name):
+        # Start de font library op en maakt een object aan van een systeem font
+        pygame.font.init() 
         
         clock_font_0 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 180) #general_font
         clock_font_1 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 180) #general_font
@@ -40,4 +48,4 @@ class Start():
 
         clock_font = [clock_font_0, clock_font_1, clock_font_2, clock_font_3, clock_font_4, clock_font_5]
 
-        return general_font, clock_font # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is
+        return clock_font # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is
