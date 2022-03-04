@@ -30,25 +30,27 @@ class Train():
 
 
     def update(self, velocity, gamma_factor):
-        if velocity != self.old_velocity:  # Beperkt het aantal keer dat de trein geupdate moet worden als er niets veranderd is
+        if velocity != self.old_velocity:  # Beperkt het aantal keer dat de trein geupdate moet worden als de snelheid niet veranderd is
             self.old_velocity = velocity
+            self.percentage = (1/gamma_factor)*100
 
             self.reference_length = self.length/gamma_factor
-            self.percentage = (1/gamma_factor)*100
-            self.rectangle = pygame.Rect(self.x_mid_position-(self.reference_length/2),
-                                         self.y_mid_position-(self.height/2), self.reference_length, self.height)
+            self.rectangle = pygame.Rect((self.x_mid_position-(self.reference_length/2),
+                                         self.y_mid_position-(self.height/2)), (self.reference_length,self.height))
 
             self.image = pygame.transform.scale(
                 self.original_image, self.rectangle.size)
 
 
-    def draw(self):
+    def draw(self, show_percentage):
         # Plaatje als trein
         self.screen.blit(self.image, (self.rectangle.x, self.rectangle.y))
-        # int() doet niet hetzelfde als round(), int() haalt de decimalen weg zonder af te ronden
-        self.percentage_txt = self.font[4].render(
-            str(int(round(self.percentage, 0))) + "%", False, (255, 255, 255))
-        self.percentage_rect = self.percentage_txt.get_rect(
-            center=(self.x_mid_position, self.y_mid_position-80))
-        # Percentage lengte van de trein
-        self.screen.blit(self.percentage_txt, self.percentage_rect)
+
+        if show_percentage:
+            # int() doet niet hetzelfde als round(), int() haalt de decimalen weg zonder af te ronden
+            self.percentage_txt = self.font[4].render(
+                str(int(round(self.percentage, 0))) + "%", False, (255, 255, 255))
+            self.percentage_rect = self.percentage_txt.get_rect(
+                center=(self.x_mid_position, self.y_mid_position-80))
+            # Percentage lengte van de trein
+            self.screen.blit(self.percentage_txt, self.percentage_rect)
