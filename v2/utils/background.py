@@ -9,7 +9,7 @@ class Background():
         self.screen = screen
         # os.path.join() zorgt ervoor dat het programma ook op ander besturingssystemen afgespeeld kan worden, omdat paths anders werken op verschillende besturingssystemen
         self.original_image = pygame.image.load(
-            os.path.join('v2', 'utils', 'images', image_name))
+            os.path.join('v2', 'utils', 'images', image_name)).convert()
         self.font = font
 
         # old_velocity moet gedefinieerd moet worden, maar de waarde mag niet gelijk zijn of groter dan zijn dan 0 aan het begin.

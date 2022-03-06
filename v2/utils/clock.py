@@ -22,7 +22,7 @@ class Clock():
 
         self.name = name
         self.coordinates = (x, y)
-        self.text_coordinates = (x-2, y-2)
+        self.text_coordinates = (x, y-2)
 
         self.text_width = text_width
         self.text_height = text_height
@@ -52,7 +52,7 @@ class Clock():
             self.previous = self.end
             self.end = timer()
             self.delta_time = self.end - self.previous
-            self.time += self.delta_time
+            self.time += self.delta_time*30
 
         self.calc_radians()
 
@@ -101,11 +101,11 @@ class Clock():
             self.font_number += 1
             self.size_after = self.font[self.font_number].size("10.00")
 
-            self.width_compensation = (self.size_before[0] - self.size_after[0])/2
+            self.width_compensation = -1*self.font_number # -1*self.font_number = de verschuiving naar links van de tekst op basis van de grootte van de tekst in de digitale klok
             self.height_compensation = (self.size_before[1] - self.size_after[1])/2
 
             #self.text_coordinates = (self.text_coordinates[0] - self.width_compensation, self.text_coordinates[1] + self.height_compensation)
-            self.text_coordinates = (self.text_coordinates[0], self.text_coordinates[1] + self.height_compensation)
+            self.text_coordinates = (self.text_coordinates[0] + self.width_compensation, self.text_coordinates[1] + self.height_compensation)
                         
         self.rect_border = pygame.Rect(self.coordinates[0] -2*self.border, self.coordinates[1], self.text_width +2*self.border, self.text_height +self.border)
         self.rect_background = pygame.Rect(self.coordinates[0] -self.border, self.coordinates[1] +self.border, self.text_width, self.text_height -self.border)
