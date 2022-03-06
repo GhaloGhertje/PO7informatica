@@ -115,7 +115,6 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                     SIMULATION += 1
                     main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_r:
-                    pygame.font.quit()
                     main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_SPACE:
                     PAUSED = not PAUSED
