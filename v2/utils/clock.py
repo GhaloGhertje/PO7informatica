@@ -28,9 +28,6 @@ class Clock():
         self.text_height = text_height
         self.border = border
 
-        #self.rectangle = pygame.Rect(100, 300, 100, 100)
-        #self.surface = pygame.surface.Surface(self.rectangle)
-
         # ANALOG CLOCK
         self.radius = text_width/2
         self.center_pos = (self.radius+self.coordinates[0] - self.border, 620)
