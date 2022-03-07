@@ -110,9 +110,11 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                     VALUE = slider.move_keyboard(1)
                 elif event.key == pygame.K_DOWN and SIMULATION > MIN_SIMULATION:
                     SIMULATION -= 1
+                    PAUSED = True
                     main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_UP and SIMULATION < MAX_SIMULATION:
                     SIMULATION += 1
+                    PAUSED = True
                     main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_r:
                     main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
