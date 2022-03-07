@@ -70,27 +70,19 @@ class Clock():
         self.calc_radians()
 
 
-    def draw(self, paused, perspective):
+    def draw(self, paused):
         # GENERAL
         # Als de simulatie gepauseerd wordt, wordt de simulatie daadwerkelijk gepauseerd door deze functie te roepen
         if paused:
             self.pause_timer()
 
-        # Zet het perspectief "A" of "B" op het scherm bij de klok per perspectief
-        if perspective == "A":
-            if self.name == "clock":
-                text_p = "A"
-            else:
-                text_p = "B"
-            # Maakt de kleur van de "A" of "B" BLAUW op basis van het perspectief
-            self.screen.blit(self.general_font[6].render(text_p, False, BLUE), (self.coordinates[0] +101, self.coordinates[1] +235))
-        else:
-            if self.name == "clock":
-                text_p = "A"
-            else:
-                text_p = "B"
-            # Maakt de kleur van de "A" of "B" ROOD op basis van het perspectief
+        # Zet bij de klokken de tekst A en B in het rood en in het blauw op basis van de naam van de klok
+        if self.name == "clock":
+            text_p = "A"
             self.screen.blit(self.general_font[6].render(text_p, False, RED), (self.coordinates[0] +101, self.coordinates[1] +235))
+        else:
+            text_p = "B"
+            self.screen.blit(self.general_font[6].render(text_p, False, BLUE), (self.coordinates[0] +101, self.coordinates[1] +235))
 
         # DIGITAL CLOCK - Tekent de digitale klok en verandert de grootte van de tekst in de digitale klok
         self.text = str(round(self.time, 1))

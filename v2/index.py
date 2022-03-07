@@ -46,9 +46,9 @@ PERSPECTIVE = "A"
 
 def status(PERSPECTIVE, SIMULATION):
     if PERSPECTIVE == "A":
-        SCREEN.blit(FONT[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, BLUE), (70,130))
-    else:
         SCREEN.blit(FONT[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, RED), (70,130))
+    else:
+        SCREEN.blit(FONT[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, BLUE), (70,130))
 
 
 def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
@@ -157,16 +157,16 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                     init_clocks = True
                     delta_time = clock.update()
                     reference_clock.reference_update(delta_time, GAMMA_FACTOR)
-                clock.draw(PAUSED, PERSPECTIVE)
-                reference_clock.draw(PAUSED, PERSPECTIVE)
+                clock.draw(PAUSED)
+                reference_clock.draw(PAUSED)
 
             else:
                 if not PAUSED or not init_clocks:
                     init_clocks = True
                     delta_time = reference_clock.update()
                     clock.reference_update(delta_time, GAMMA_FACTOR)
-                clock.draw(PAUSED, PERSPECTIVE)
-                reference_clock.draw(PAUSED, PERSPECTIVE)
+                clock.draw(PAUSED)
+                reference_clock.draw(PAUSED)
 
         status(PERSPECTIVE, SIMULATION)
 
