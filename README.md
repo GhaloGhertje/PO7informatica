@@ -1,22 +1,21 @@
 # Relativiteitstheorie (PO7 Informatica)
-Koen, Sven, Mitchell, Simone en Nico
+Project van Koen, Sven, Mitchell, Simone en Nico over de speciale relativiteitstheorie.
 
-
-
-CONTROLS
+## Gebruiksaanwijzing
+Dit is de gebruiksaanwijzing voor ons programma.
 
 Spatie = zet de klokken op pauze of start de klokken
-R = reset de timers
-P = wisselt van perspectief
+R = reset de timers 
+P = wisselt van perspectief 
 D = het aantal decimalen van de snelheid met de eenheid "c"
 
-Pijltje naar boven = volgende simulatie
+Pijltje naar boven = volgende simulatie 
 Pijltje naar onder = vorige simulatie
 
-Klikken op de snelheids-slider = verandert de snelheid naar de gewenste muispositie
-Pijltje naar rechts = +0,1 afgerond bij de snelheid toevoegen
-Pijltje naar links = -0,1 afgerond bij de snelheid toevoegen
+Klikken op de snelheids-slider = verandert de snelheid naar de muispositie 
+Pijltje naar rechts = (afgerond) +0,1 c bij de snelheid toevoegen 
+Pijltje naar links = (afgerond) -0,1 c bij de snelheid toevoegen
 
-Simulatie 1 = tijdillatatie
-Simulatie 2 = lengtecontractie
-Simulatie 3 = tijdillatatie + lengtecontractie
+Simulatie 1 = tijddilatatie 
+Simulatie 2 = lengtecontractie 
+Simulatie 3 = tijddilatatie + lengtecontractie
