@@ -10,12 +10,12 @@ P = wisselt van perspectief,
 D = het aantal decimalen van de snelheid met de eenheid "c",
 
 Pijltje naar boven = volgende simulatie, 
-Pijltje naar onder = vorige simulatie,
+pijltje naar onder = vorige simulatie,
 
 Klikken op de snelheids-slider = verandert de snelheid naar de muispositie, 
-Pijltje naar rechts = (afgerond) +0,1 c bij de snelheid toevoegen, 
-Pijltje naar links = (afgerond) -0,1 c bij de snelheid toevoegen
+pijltje naar rechts = (afgerond) +0,1 c bij de snelheid toevoegen, 
+pijltje naar links = (afgerond) -0,1 c bij de snelheid toevoegen
 
 Simulatie 1 = tijddilatatie, 
-Simulatie 2 = lengtecontractie, 
-Simulatie 3 = tijddilatatie + lengtecontractie
+simulatie 2 = lengtecontractie, 
+simulatie 3 = tijddilatatie + lengtecontractie
