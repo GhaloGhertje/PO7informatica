@@ -32,7 +32,9 @@ class Clock():
         self.radius = text_width/2
         self.center_pos = (self.radius+self.coordinates[0] - self.border, 620)
         self.circle_border = 10
+        # Variabelen die horen bij de klok voor het station
         self.station_clock_pos = self.station_clock_pos_ref = self.station_clock_end_pos = self.station_clock_end_pos_ref = (925, 490)
+        self.pointer_thickness = 3
 
         # TIME & DRAW
         self.start = False
@@ -73,7 +75,7 @@ class Clock():
         self.calc_radians()
 
 
-    def draw(self, paused, perspective, simulation):
+    def draw(self, paused, perspective, simulation, gamma_factor):
         # GENERAL
         # Als de simulatie gepauseerd wordt, wordt de simulatie daadwerkelijk gepauseerd door deze functie te roepen
         if paused:
@@ -125,8 +127,7 @@ class Clock():
         pygame.draw.line(self.screen, BLUE, self.center_pos, self.end_pos, 3)
 
         if self.name == "clock" and perspective == "B":
-            self.calc_station_clock(simulation)
-            pygame.draw.line(self.screen, BLACK, self.station_clock_pos_ref, self.station_clock_end_pos_ref, 5)
+            self.draw_station_clock(simulation, gamma_factor)
 
 
     def calc_radians(self):  # Rekent de radialen uit voor de functie van de klok en rekent daarna de eindpositie van de wijzer van de klok uit
@@ -134,16 +135,30 @@ class Clock():
         self.end_pos = (self.center_pos[0] + math.sin(self.radians)*self.radius, self.center_pos[1] - math.cos(self.radians)*self.radius)
     
 
-    def calc_station_clock(self, simulation):
+    def draw_station_clock(self, simulation, gamma_factor):
         if simulation == 3:
-            self.station_clock_pos_ref = (960 - (960 - self.station_clock_pos[0])/self.gamma_factor, self.station_clock_pos[1])
-            self.station_clock_end_pos_ref = (self.station_clock_pos_ref[0] + (math.sin(self.radians)*30)/self.gamma_factor, self.station_clock_pos_ref[1] - math.cos(self.radians)*30)
+            # Berekent de waardes van de klok op het gebouw, waar wel rekening is gehouden met lengtecontractie
+            self.station_clock_pos_ref = (960 - (960 - self.station_clock_pos[0])/gamma_factor, self.station_clock_pos[1])
+            self.station_clock_end_pos_ref = (self.station_clock_pos_ref[0] + (math.sin(self.radians)*29)/gamma_factor, self.station_clock_pos_ref[1] - math.cos(self.radians)*30)
+
+            # Verandert de dikte van de wijzer op basis van de gamma_factor (anders blijft de wijzer erg dik op het scherm)
+            if gamma_factor < 1.5:
+                self.pointer_thickness = 3
+            elif gamma_factor <= 3:
+                self.pointer_thickness = 2
+            else:
+                self.pointer_thickness = 1
+
         else:
+            # Berekent de waardes van de klok op het gebouw zonder rekening te houden met lengtecontractie
             self.station_clock_pos_ref = self.station_clock_pos
-            self.station_clock_end_pos_ref = (self.station_clock_pos_ref[0] + (math.sin(self.radians)*30), self.station_clock_pos_ref[1] - math.cos(self.radians)*30)
-    
-        #self.station_clock_end_pos
-        #self.station_clock_end_pos_ref
+            self.station_clock_end_pos_ref = (self.station_clock_pos_ref[0] + (math.sin(self.radians)*29), self.station_clock_pos_ref[1] - math.cos(self.radians)*29)
+            
+            self.pointer_thickness = 3
+
+
+        # Zet de wijzer van de klok van het gebouw op het scherm
+        pygame.draw.line(self.screen, BLACK, self.station_clock_pos_ref, self.station_clock_end_pos_ref, self.pointer_thickness)
 
 
     def pause_timer(self):  # Een functie die helpt met het pauseren van de timers, door variabelen te veranderen

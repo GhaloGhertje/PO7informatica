@@ -136,8 +136,10 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
         # Berekent waarde van de snelheid en de gammafactor
         VALUE = slider.move()
         GAMMA_FACTOR = slider.gamma()
+
         # Past de slider aan op het scherm
         slider.draw(DECIMALS)
+
 
         # BEPAALT SIMULATIE OP HET SCHERM
         if SIMULATION == 2 or SIMULATION == 3:
@@ -149,7 +151,7 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                 # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
                 train.update(VALUE, GAMMA_FACTOR)
                 train.draw(True)  # Schrijft de trein op het scherm
-
+                
         if SIMULATION == 1 or SIMULATION == 3:
             if PERSPECTIVE == "A":
                 if SIMULATION == 1:
@@ -160,16 +162,16 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                     init_clocks = True
                     delta_time = clock.update()
                     reference_clock.reference_update(delta_time, GAMMA_FACTOR)
-                clock.draw(PAUSED, PERSPECTIVE, SIMULATION)
-                reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION)
+                clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
+                reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
 
             else:
                 if not PAUSED or not init_clocks:
                     init_clocks = True
                     delta_time = reference_clock.update()
                     clock.reference_update(delta_time, GAMMA_FACTOR)
-                clock.draw(PAUSED, PERSPECTIVE, SIMULATION)
-                reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION)
+                clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
+                reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
 
         status(PERSPECTIVE, SIMULATION)
 
