@@ -117,6 +117,7 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                     PAUSED = True
                     main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_r:
+                    PAUSED = True
                     main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_SPACE:
                     PAUSED = not PAUSED
@@ -159,16 +160,16 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                     init_clocks = True
                     delta_time = clock.update()
                     reference_clock.reference_update(delta_time, GAMMA_FACTOR)
-                clock.draw(PAUSED)
-                reference_clock.draw(PAUSED)
+                clock.draw(PAUSED, PERSPECTIVE, SIMULATION)
+                reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION)
 
             else:
                 if not PAUSED or not init_clocks:
                     init_clocks = True
                     delta_time = reference_clock.update()
                     clock.reference_update(delta_time, GAMMA_FACTOR)
-                clock.draw(PAUSED)
-                reference_clock.draw(PAUSED)
+                clock.draw(PAUSED, PERSPECTIVE, SIMULATION)
+                reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION)
 
         status(PERSPECTIVE, SIMULATION)
 

@@ -42,7 +42,7 @@ class Background():
         self.screen.blit(self.image, (self.rectangle.x, self.rectangle.y))
         
         # Berekent het percentage en berekent de positie van het percentage (in het midden van het scherm)
-        self.percentage_txt = self.font[4].render(
+        self.percentage_txt = self.font[5].render(
             str(int(round(self.percentage, 0))) + "%", False, (255, 255, 255))  # int() doet niet hetzelfde als round(), int() haalt de decimalen weg zonder af te ronden
         self.percentage_rect = self.percentage_txt.get_rect(
             center=(self.length/2, 300))

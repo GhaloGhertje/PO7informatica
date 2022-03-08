@@ -32,6 +32,7 @@ class Clock():
         self.radius = text_width/2
         self.center_pos = (self.radius+self.coordinates[0] - self.border, 620)
         self.circle_border = 10
+        self.station_clock_pos = self.station_clock_pos_ref = self.station_clock_end_pos = self.station_clock_end_pos_ref = (925, 490)
 
         # TIME & DRAW
         self.start = False
@@ -60,6 +61,8 @@ class Clock():
 
 
     def reference_update(self, delta_time, gamma_factor):  # Update de waarde van de klok die te maken heeft met tijddillatatie
+        self.gamma_factor = gamma_factor
+        
         if not self.start:
             self.start = True
             self.time = self.previous_time
@@ -70,7 +73,7 @@ class Clock():
         self.calc_radians()
 
 
-    def draw(self, paused):
+    def draw(self, paused, perspective, simulation):
         # GENERAL
         # Als de simulatie gepauseerd wordt, wordt de simulatie daadwerkelijk gepauseerd door deze functie te roepen
         if paused:
@@ -121,10 +124,26 @@ class Clock():
         pygame.draw.circle(self.screen, BLUE, self.center_pos, 5)
         pygame.draw.line(self.screen, BLUE, self.center_pos, self.end_pos, 3)
 
+        if self.name == "clock" and perspective == "B":
+            self.calc_station_clock(simulation)
+            pygame.draw.line(self.screen, BLACK, self.station_clock_pos_ref, self.station_clock_end_pos_ref, 5)
+
 
     def calc_radians(self):  # Rekent de radialen uit voor de functie van de klok en rekent daarna de eindpositie van de wijzer van de klok uit
         self.radians = (self.time/2)*math.pi  # Elke 4 secondes 1 rondje, want 1 rondje in 1 seconde is t*(2/1)*pi. 1 rondje in 4 secondes is t*(2/4)*pi = t*(1/2)*pi
         self.end_pos = (self.center_pos[0] + math.sin(self.radians)*self.radius, self.center_pos[1] - math.cos(self.radians)*self.radius)
+    
+
+    def calc_station_clock(self, simulation):
+        if simulation == 3:
+            self.station_clock_pos_ref = (960 - (960 - self.station_clock_pos[0])/self.gamma_factor, self.station_clock_pos[1])
+            self.station_clock_end_pos_ref = (self.station_clock_pos_ref[0] + (math.sin(self.radians)*30)/self.gamma_factor, self.station_clock_pos_ref[1] - math.cos(self.radians)*30)
+        else:
+            self.station_clock_pos_ref = self.station_clock_pos
+            self.station_clock_end_pos_ref = (self.station_clock_pos_ref[0] + (math.sin(self.radians)*30), self.station_clock_pos_ref[1] - math.cos(self.radians)*30)
+    
+        #self.station_clock_end_pos
+        #self.station_clock_end_pos_ref
 
 
     def pause_timer(self):  # Een functie die helpt met het pauseren van de timers, door variabelen te veranderen
