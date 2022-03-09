@@ -1,1 +1,0 @@
-"C:/Program Files/Python310/python.exe" c:/Users/mjbri/OneDrive/Bureaublad/PO7informatica/v2/index.py
