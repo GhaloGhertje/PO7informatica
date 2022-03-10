@@ -95,18 +95,19 @@ class Clock():
         
         # Elke keer dat de tijd bij een macht van 10 uitkomt: 10, 100, 1000... wordt de grootte en positie van de tekst aangepast
         if (round(self.time, 2) >= math.pow(10.00, self.font_number)):
-            print(str(self.font_number))
-
-            self.text_render = self.general_font[0].render(self.text, False, RED)
+            # De tekst renderen om te kunnen kijken wat het verschil in grootte is tussen de verschillende fonts
+            # Dit kan dan weer toegepast worden op de positie van de tekst in de digitale klok
             self.text_render = self.font[self.font_number].render(self.text, False, RED)
 
             self.size_before = self.font[self.font_number].size("10.00")
             self.font_number += 1
             self.size_after = self.font[self.font_number].size("10.00")
 
+            # Compensatie voor de grootte, door de positie aan te passen, wordt hier berekend
             self.width_compensation = -1*self.font_number # (-1*self.font_number) = de verschuiving naar links van de tekst op basis van de grootte van de tekst in de digitale klok
             self.height_compensation = (self.size_before[1] - self.size_after[1])/2
-
+            
+            # De compensatie wordt hier toegepast op de coordinaten
             self.text_coordinates = (self.text_coordinates[0] + self.width_compensation, self.text_coordinates[1] + self.height_compensation)
 
         # Zet de positie en grootte van de klok in een variabele               
@@ -141,7 +142,7 @@ class Clock():
             self.station_clock_pos_ref = (960 - (960 - self.station_clock_pos[0])/gamma_factor, self.station_clock_pos[1])
             self.station_clock_end_pos_ref = (self.station_clock_pos_ref[0] + (math.sin(self.radians)*29)/gamma_factor, self.station_clock_pos_ref[1] - math.cos(self.radians)*30)
 
-            # Verandert de dikte van de wijzer op basis van de gamma_factor (anders blijft de wijzer erg dik op het scherm)
+            # Verandert de dikte van de wijzer op basis van de gamma_factor (anders blijft de wijzer erg dik op het scherm ten opzichte van de hele dunne afbeelding door lengtecontractie)
             if gamma_factor < 1.5:
                 self.pointer_thickness = 3
             elif gamma_factor <= 3:
