@@ -28,6 +28,14 @@ class Clock():
         self.text_height = text_height
         self.border = border
 
+        # Zorgt ervoor dat de klokken op basis van hun naam de tekst en kleur toegewezen
+        if self.name == "clock":
+            self.perspective = "A"
+            self.color = RED
+        else:
+            self.perspective = "B"
+            self.color = BLUE
+
         # ANALOG CLOCK
         self.radius = text_width/2
         self.center_pos = (self.radius+self.coordinates[0] - self.border, 620)
@@ -81,23 +89,19 @@ class Clock():
         if paused:
             self.pause_timer()
 
-        # Zet bij de klokken de tekst A en B in het rood en in het blauw op basis van de naam van de klok
-        if self.name == "clock":
-            text_p = "A"
-            self.screen.blit(self.general_font[6].render(text_p, False, RED), (self.coordinates[0] +101, self.coordinates[1] +235))
-        else:
-            text_p = "B"
-            self.screen.blit(self.general_font[6].render(text_p, False, BLUE), (self.coordinates[0] +101, self.coordinates[1] +235))
+        # Zet bij de klokken de tekst A en B in het rood of in het blauw
+        self.screen.blit(self.general_font[8].render(self.perspective, False, self.color), (self.coordinates[0] +99, self.coordinates[1] +232))
+
 
         # DIGITAL CLOCK - Tekent de digitale klok en verandert de grootte van de tekst in de digitale klok
         self.text = str(round(self.time, 1))
-        self.text_render = self.font[self.font_number].render(self.text, False, RED)
+        self.text_render = self.font[self.font_number].render(self.text, False, self.color)
         
         # Elke keer dat de tijd bij een macht van 10 uitkomt: 10, 100, 1000... wordt de grootte en positie van de tekst aangepast
         if (round(self.time, 2) >= math.pow(10.00, self.font_number)):
             # De tekst renderen om te kunnen kijken wat het verschil in grootte is tussen de verschillende fonts
             # Dit kan dan weer toegepast worden op de positie van de tekst in de digitale klok
-            self.text_render = self.font[self.font_number].render(self.text, False, RED)
+            self.text_render = self.font[self.font_number].render(self.text, False, self.color)
 
             self.size_before = self.font[self.font_number].size("10.00")
             self.font_number += 1
@@ -121,11 +125,12 @@ class Clock():
         # Zet de tekst in de klok op het scherm
         self.screen.blit(self.text_render, self.text_coordinates)
 
+
         # ANALOG CLOCK - Tekent de analoge klok
         pygame.draw.circle(self.screen, BLACK, self.center_pos, self.radius+1)
         pygame.draw.circle(self.screen, WHITE, self.center_pos, self.radius+self.circle_border+1, self.circle_border)
-        pygame.draw.circle(self.screen, BLUE, self.center_pos, 5)
-        pygame.draw.line(self.screen, BLUE, self.center_pos, self.end_pos, 3)
+        pygame.draw.circle(self.screen, self.color, self.center_pos, 5)
+        pygame.draw.line(self.screen, self.color, self.center_pos, self.end_pos, 3)
 
         if self.name == "clock" and perspective == "B":
             self.draw_station_clock(simulation, gamma_factor)

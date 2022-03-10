@@ -14,14 +14,15 @@ class Start():
 
         # Monitor
         display_info = pygame.display.Info() # Vraagt de monitor specificaties op
-        screen = pygame.display.set_mode((display_info.current_w, display_info.current_h), pygame.NOFRAME) # displayInfo.current_w staat voor de width van het scherm die al eerder opgevraagd is. pygame.NOFRAME staat voor windowed borderless
+        screen = pygame.display.set_mode((1920, 1080), pygame.NOFRAME) # displayInfo.current_w staat voor de width van het scherm die al eerder opgevraagd is. pygame.NOFRAME staat voor windowed borderless
         return screen # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is
 
 
     def fonts():
-        # Start de font library op en maakt een object aan van een systeem font
+        # Start de font library op
         pygame.font.init()
 
+        # Stopt de fonts in een variabele
         general_font_0 = pygame.font.SysFont('Arial Black', 18)
         general_font_1 = pygame.font.SysFont('Arial Black', 20)
         general_font_2 = pygame.font.SysFont('Arial Black', 22)
@@ -29,16 +30,21 @@ class Start():
         general_font_4 = pygame.font.SysFont('Arial Black', 26)
         general_font_5 = pygame.font.SysFont('Arial Black', 28)
         general_font_6 = pygame.font.SysFont('Arial Black', 30)
+        general_font_7 = pygame.font.SysFont('Arial Black', 32)
+        general_font_8 = pygame.font.SysFont('Arial Black', 34)
 
-        font = [general_font_0, general_font_1, general_font_2, general_font_3, general_font_4, general_font_5, general_font_6]
-
-        return font # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is
+        # Stopt de variabelen in een array
+        font = [general_font_0, general_font_1, general_font_2, general_font_3, general_font_4, general_font_5, general_font_6, general_font_7, general_font_8]
+        
+        # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is, hier kunnen de verschillende fonten weer gebruikt worden
+        return font
 
 
     def clock_fonts(file_name):
-        # Start de font library op en maakt een object aan van een systeem font
+        # Start de font library op
         pygame.font.init() 
         
+        # Stopt de fonts in een variabele
         clock_font_0 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 180) #general_font
         clock_font_1 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 180) #general_font
         clock_font_2 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 156) #general_font
@@ -46,6 +52,8 @@ class Start():
         clock_font_4 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 108) #general_font
         clock_font_5 = pygame.font.Font(os.path.join('v2', 'utils', 'fonts', file_name), 84) #general_font
 
+        # Stopt de variabelen in een array
         clock_font = [clock_font_0, clock_font_1, clock_font_2, clock_font_3, clock_font_4, clock_font_5]
 
-        return clock_font # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is
+        # Geeft het gemaakte object terug naar de plek waar deze functie opgevraagd is, hier kunnen de verschillende fonten weer gebruikt worden
+        return clock_font

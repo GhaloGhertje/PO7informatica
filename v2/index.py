@@ -10,6 +10,7 @@ Koen van der Horst
 
 6Vc / 6Vin1
 '''
+
 # IMPORTEREN VAN DE LIBRARIES
 import pygame
 
@@ -146,30 +147,40 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
             if PERSPECTIVE == "A":
                 # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
                 train.update(VALUE, GAMMA_FACTOR)
-                train.draw(True)  # Schrijft de trein op het scherm
+                train.draw(True)  # Zet de trein op het scherm
             if PERSPECTIVE == "A":
                 # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
                 train.update(VALUE, GAMMA_FACTOR)
-                train.draw(True)  # Schrijft de trein op het scherm
+                train.draw(True)  # Zet de trein op het scherm
                 
         if SIMULATION == 1 or SIMULATION == 3:
             if PERSPECTIVE == "A":
                 if SIMULATION == 1:
+                    # Bij deze simulatie wordt geen rekening gehouden met lengtecontractie, de standaardwaardes worden voor de trein danook ingevuld
+                    # Deze waardes zijn (0, 1)
                     train.update(0, 1)
-                    train.draw(False)
+                    train.draw(False)  # Zet de trein op het scherm
 
+                # Als de simulatie NIET voor de eerste keer opstart (na een reset) of de simulatie NIET gepauzeerd is,
+                # dan wordt de tijd van de klokken geupdate
                 if not PAUSED or not init_clocks:
                     init_clocks = True
                     delta_time = clock.update()
                     reference_clock.reference_update(delta_time, GAMMA_FACTOR)
+
+                # Zet de 2 klokken op het scherm
                 clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
                 reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
 
             else:
+                # Als de simulatie NIET voor de eerste keer opstart (na een reset) of de simulatie NIET gepauzeerd is,
+                # dan wordt de tijd van de klokken geupdate
                 if not PAUSED or not init_clocks:
                     init_clocks = True
                     delta_time = reference_clock.update()
                     clock.reference_update(delta_time, GAMMA_FACTOR)
+
+                # Zet de 2 klokken op het scherm
                 clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
                 reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
 

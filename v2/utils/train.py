@@ -20,7 +20,7 @@ class Train():
         self.original_image = pygame.image.load(
             os.path.join('v2', 'utils', 'images', image_name))
 
-        # Het plaatje zelf was origineel te groot, dus passen we de lengte en hoogte van het plaatje aan (schaal 1:4)\
+        # Het plaatje zelf was origineel te groot, dus passen we de lengte en hoogte van het plaatje aan (schaal 1:4)
         self.original_image_rectangle = self.original_image.get_rect()
         self.length, self.height = self.original_image_rectangle.size
         self.length /= 4
