@@ -47,9 +47,9 @@ PERSPECTIVE = 'A'
 
 def status(PERSPECTIVE, SIMULATION):
     if PERSPECTIVE == 'A':
-        SCREEN.blit(FONT[6].render(str(SIMULATION) + ' ' + PERSPECTIVE, False, RED), (70,130))
+        SCREEN.blit(FONT[8].render(str(SIMULATION) + ' ' + PERSPECTIVE, False, RED), (70,125))
     else:
-        SCREEN.blit(FONT[6].render(str(SIMULATION) + ' ' + PERSPECTIVE, False, BLUE), (70,130))
+        SCREEN.blit(FONT[8].render(str(SIMULATION) + ' ' + PERSPECTIVE, False, BLUE), (1785,125))
 
 
 def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
@@ -79,7 +79,8 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
 
     # MAIN LOOP
     while True:
-        # Plakt een de achtergrond op het scherm
+        # Plakt een de achtergrond op het scherm, deze functies moeten als eerste opgeroepen worden
+        # Anders wordt er een achtergrond boven op de slider/trein/klokken geplakt, dit is niet de bedoeling
         if PERSPECTIVE == 'A':
             background.draw()
         else:
@@ -98,10 +99,13 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                 Stop.exit()
     	    # MOUSE
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Krijgt de coordinaten van de muis, op het moment van klikken
                 mouse_position = pygame.mouse.get_pos()
+                # Als de coordinaten van de muis over het rectangle van de slider heen gaan, wanneer er wordt gedrukt, wordt de variabele True
                 if slider.surface_rect.collidepoint(mouse_position):
                     slider.click = True
             elif event.type == pygame.MOUSEBUTTONUP:
+                # Wanneer de muisknop losgelaten wordt, wordt de variabele weer False
                 slider.click = False
             # KEYS
             elif event.type == pygame.KEYDOWN: # Alle evenementen waarbij de knop is ingedrukt
@@ -141,26 +145,19 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
         # Past de slider aan op het scherm
         slider.draw(DECIMALS)
 
-
-        # BEPAALT SIMULATIE OP HET SCHERM
-        if SIMULATION == 2 or SIMULATION == 3:
-            if PERSPECTIVE == 'A':
+        
+        # BEPAALT SIMULATIE EN PERSPECTIEF OP HET SCHERM
+        if PERSPECTIVE == "A":
+            if SIMULATION == 1:
+                # Bij deze simulatie wordt geen rekening gehouden met lengtecontractie, de standaardwaardes worden voor de trein danook ingevuld
+                # Deze waardes zijn (0, 1)
+                train.update(0, 1)
+                train.draw(False)  # Zet de trein op het scherm
+            else:
                 # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
                 train.update(VALUE, GAMMA_FACTOR)
                 train.draw(True)  # Zet de trein op het scherm
-            if PERSPECTIVE == 'A':
-                # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
-                train.update(VALUE, GAMMA_FACTOR)
-                train.draw(True)  # Zet de trein op het scherm
-                
-        if SIMULATION == 1 or SIMULATION == 3:
-            if PERSPECTIVE == 'A':
-                if SIMULATION == 1:
-                    # Bij deze simulatie wordt geen rekening gehouden met lengtecontractie, de standaardwaardes worden voor de trein danook ingevuld
-                    # Deze waardes zijn (0, 1)
-                    train.update(0, 1)
-                    train.draw(False)  # Zet de trein op het scherm
-
+            if SIMULATION != 2:
                 # Als de simulatie NIET voor de eerste keer opstart (na een reset) of de simulatie NIET gepauzeerd is,
                 # dan wordt de tijd van de klokken geupdate
                 if not PAUSED or not init_clocks:
@@ -171,8 +168,8 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                 # Zet de 2 klokken op het scherm
                 clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
                 reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
-
-            else:
+        else:
+            if SIMULATION != 2:
                 # Als de simulatie NIET voor de eerste keer opstart (na een reset) of de simulatie NIET gepauzeerd is,
                 # dan wordt de tijd van de klokken geupdate
                 if not PAUSED or not init_clocks:
@@ -184,6 +181,9 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                 clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
                 reference_clock.draw(PAUSED, PERSPECTIVE, SIMULATION, GAMMA_FACTOR)
 
+
+        # Roept de functie op die redelijk ver boven in dit bestand staat
+        # Bij het oproepen van de functie wordt de simulatie en het perspectief weergegeven op het scherm
         status(PERSPECTIVE, SIMULATION)
 
         # Bepaalt het maximale aantal keer per seconde dat de loop uitgevoerd wordt
