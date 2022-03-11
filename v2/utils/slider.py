@@ -59,13 +59,13 @@ class Slider():
         # Het op het beeld zetten van de slider en de snelheidswaardes
         self.screen.blit(self.copy_surface, (self.x_position, self.y_position))
         self.screen.blit(self.font[0].render(
-            "Snelheid: " + str(round(self.value, self.decimals)) + " c", False, WHITE), (100, 50))
+            'Snelheid: ' + f'{self.value:.{self.decimals}f}' + ' c', False, WHITE), (100, 50))
         self.value_ms = self.value * 2.99792458*10**8
         self.value_kmh = self.value_ms * 3.6
         self.screen.blit(self.font[0].render(
-            "Snelheid: " + str("{:e}".format(int(self.value_ms))) + " m/s", False, WHITE), (800, 50))  # "{:e}.format()" zet de nummers in de wetenschappelijke notatie (bijvoorbeeld: 1,234e+8)
+            'Snelheid: ' + str('{:e}'.format(int(self.value_ms))) + ' m/s', False, WHITE), (800, 50))  # '{:e}.format()' zet de nummers in de wetenschappelijke notatie (bijvoorbeeld: 1,234e+8)
         self.screen.blit(self.font[0].render(
-            "Snelheid: " + str("{:e}".format(int(self.value_kmh))) + " km/h", False, WHITE), (1500, 50))
+            'Snelheid: ' + str('{:e}'.format(int(self.value_kmh))) + ' km/h', False, WHITE), (1500, 50))
 
 
     def move(self):  # Verandert de waarde van de snelheid op basis van de muispositie

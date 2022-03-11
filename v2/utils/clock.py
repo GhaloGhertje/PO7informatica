@@ -29,11 +29,11 @@ class Clock():
         self.border = border
 
         # Zorgt ervoor dat de klokken op basis van hun naam de tekst en kleur toegewezen
-        if self.name == "clock":
-            self.perspective = "A"
+        if self.name == 'clock':
+            self.perspective = 'A'
             self.color = RED
         else:
-            self.perspective = "B"
+            self.perspective = 'B'
             self.color = BLUE
 
         # ANALOG CLOCK
@@ -103,9 +103,9 @@ class Clock():
             # Dit kan dan weer toegepast worden op de positie van de tekst in de digitale klok
             self.text_render = self.font[self.font_number].render(self.text, False, self.color)
 
-            self.size_before = self.font[self.font_number].size("10.00")
+            self.size_before = self.font[self.font_number].size('10.00')
             self.font_number += 1
-            self.size_after = self.font[self.font_number].size("10.00")
+            self.size_after = self.font[self.font_number].size('10.00')
 
             # Compensatie voor de grootte, door de positie aan te passen, wordt hier berekend
             self.width_compensation = -1*self.font_number # (-1*self.font_number) = de verschuiving naar links van de tekst op basis van de grootte van de tekst in de digitale klok
@@ -132,7 +132,7 @@ class Clock():
         pygame.draw.circle(self.screen, self.color, self.center_pos, 5)
         pygame.draw.line(self.screen, self.color, self.center_pos, self.end_pos, 3)
 
-        if self.name == "clock" and perspective == "B":
+        if self.name == 'clock' and perspective == 'B':
             self.draw_station_clock(simulation, gamma_factor)
 
 

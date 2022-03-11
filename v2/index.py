@@ -42,14 +42,14 @@ VALUE = 0
 GAMMA_FACTOR = 1
 PAUSED = True
 DECIMALS = False
-PERSPECTIVE = "A"
+PERSPECTIVE = 'A'
 
 
 def status(PERSPECTIVE, SIMULATION):
-    if PERSPECTIVE == "A":
-        SCREEN.blit(FONT[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, RED), (70,130))
+    if PERSPECTIVE == 'A':
+        SCREEN.blit(FONT[6].render(str(SIMULATION) + ' ' + PERSPECTIVE, False, RED), (70,130))
     else:
-        SCREEN.blit(FONT[6].render(str(SIMULATION) + " " + PERSPECTIVE, False, BLUE), (70,130))
+        SCREEN.blit(FONT[6].render(str(SIMULATION) + ' ' + PERSPECTIVE, False, BLUE), (70,130))
 
 
 def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE):  # Een functie die opnieuw geroepen kan worden als de simulatie gereset of gestart moet worden
@@ -66,8 +66,8 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
     # Slider(self, screen, font, name, min, max, y_pos, width, height)
     slider = Slider(SCREEN, FONT, 'Snelheid', VALUE, 0, 0.999999, 300, 1620, 100)
     # Clock(self, screen, font, general_font, name, x, y, text_width, text_height, border)
-    clock = Clock(SCREEN, clock_font, FONT, "clock", 100, 800, 280, 210, 25)
-    reference_clock = Clock(SCREEN, clock_font, FONT, "reference_clock", 1540, 800, 280, 210, 25)
+    clock = Clock(SCREEN, clock_font, FONT, 'clock', 100, 800, 280, 210, 25)
+    reference_clock = Clock(SCREEN, clock_font, FONT, 'reference_clock', 1540, 800, 280, 210, 25)
     # Background(self, screen, image_name)
     background = Background(SCREEN, 'achtergrond.png', FONT)
     reference_background = Background(SCREEN, 'achtergrond_ref.png', FONT)
@@ -80,7 +80,7 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
     # MAIN LOOP
     while True:
         # Plakt een de achtergrond op het scherm
-        if PERSPECTIVE == "A":
+        if PERSPECTIVE == 'A':
             background.draw()
         else:
             if SIMULATION == 1:
@@ -125,11 +125,11 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
                 elif event.key == pygame.K_d:
                     DECIMALS = not DECIMALS
                 elif event.key == pygame.K_p:
-                    if PERSPECTIVE == "A":
-                        PERSPECTIVE = "B"
+                    if PERSPECTIVE == 'A':
+                        PERSPECTIVE = 'B'
                         main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                     else:
-                        PERSPECTIVE = "A"
+                        PERSPECTIVE = 'A'
                         main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPECTIVE)
                 elif event.key == pygame.K_ESCAPE:
                     Stop.exit()
@@ -144,17 +144,17 @@ def main(SCREEN, FONT, SIMULATION, VALUE, GAMMA_FACTOR, PAUSED, DECIMALS, PERSPE
 
         # BEPAALT SIMULATIE OP HET SCHERM
         if SIMULATION == 2 or SIMULATION == 3:
-            if PERSPECTIVE == "A":
+            if PERSPECTIVE == 'A':
                 # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
                 train.update(VALUE, GAMMA_FACTOR)
                 train.draw(True)  # Zet de trein op het scherm
-            if PERSPECTIVE == "A":
+            if PERSPECTIVE == 'A':
                 # Update de waardes van de trein op basis van de snelheid in lichtsnelheden
                 train.update(VALUE, GAMMA_FACTOR)
                 train.draw(True)  # Zet de trein op het scherm
                 
         if SIMULATION == 1 or SIMULATION == 3:
-            if PERSPECTIVE == "A":
+            if PERSPECTIVE == 'A':
                 if SIMULATION == 1:
                     # Bij deze simulatie wordt geen rekening gehouden met lengtecontractie, de standaardwaardes worden voor de trein danook ingevuld
                     # Deze waardes zijn (0, 1)

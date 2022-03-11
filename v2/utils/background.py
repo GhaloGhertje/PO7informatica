@@ -46,7 +46,7 @@ class Background():
         
         # Berekent het percentage en berekent de positie van het percentage (in het midden van het scherm)
         self.percentage_txt = self.font[6].render(
-            str(int(round(self.percentage, 0))) + "%", False, (255, 255, 255))  # int() doet niet hetzelfde als round(), int() haalt de decimalen weg zonder af te ronden
+            str(int(round(self.percentage, 0))) + '%', False, (255, 255, 255))  # int() doet niet hetzelfde als round(), int() haalt de decimalen weg zonder af te ronden
         self.percentage_rect = self.percentage_txt.get_rect(
             center=(self.length/2, 920))
         

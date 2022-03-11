@@ -62,7 +62,7 @@ class Train():
             # Zet het getal om in tekst
             # int() doet niet hetzelfde als round(), int() haalt de decimalen weg zonder af te ronden
             self.percentage_txt = self.font[4].render(
-                str(int(round(self.percentage, 0))) + "%", False, (255, 255, 255))
+                str(int(round(self.percentage, 0))) + '%', False, (255, 255, 255))
             
             # Krijgt de rectangle van de tekst, zodat het de tekst in het midden van het scherm gezet kan worden
             self.percentage_rect = self.percentage_txt.get_rect(
